@@ -1,0 +1,3053 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>语流 LinguaFlow · 沉浸式语言学习平台（免安装版）</title>
+<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@remix-run/router@1.19.2/dist/router.umd.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-router@6.26.2/dist/umd/react-router.production.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-router-dom@6.26.2/dist/umd/react-router-dom.production.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.26.4/babel.min.js" crossorigin="anonymous"></script>
+<style>
+:root{--brand:#4f46e5;--brand-2:#7c3aed;--brand-grad:linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%);--brand-soft:#eef2ff;--cyan:#06b6d4;--pink:#ec4899;--bg:#f6f7fb;--surface:#ffffff;--ink:#101828;--ink-2:#475467;--muted:#98a2b3;--line:#eaecf1;--line-2:#e2e5ec;--ok:#16a34a;--ok-soft:#ecfdf3;--warn:#f59e0b;--warn-soft:#fffaeb;--err:#ef4444;--err-soft:#fef2f2;--r-sm:10px;--r-md:14px;--r-lg:20px;--r-xl:28px;--shadow-sm:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06);--shadow-md:0 4px 12px rgba(16,24,40,.07),0 2px 4px rgba(16,24,40,.04);--shadow-lg:0 16px 40px rgba(16,24,40,.12),0 4px 12px rgba(16,24,40,.06);--shadow-brand:0 10px 28px rgba(79,70,229,.28);--font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;--mono:"SF Mono","Cascadia Code",Consolas,"Roboto Mono",monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:var(--font);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6}a{color:inherit;text-decoration:none}button{font-family:inherit;cursor:pointer}input,select,textarea{font-family:inherit}h1,h2,h3,h4{margin:0;line-height:1.3}p{margin:0}img{max-width:100%}
+.container{max-width:1180px;margin:0 auto;padding:0 24px}.page{min-height:calc(100vh - 70px)}.section{padding:72px 0}.section.tight{padding:48px 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:12px;padding:11px 22px;font-size:15px;font-weight:600;transition:all .2s ease;white-space:nowrap}.btn:disabled{opacity:.5;cursor:not-allowed}.btn-primary{background:var(--brand-grad);color:#fff;box-shadow:var(--shadow-brand)}.btn-primary:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 14px 32px rgba(79,70,229,.36)}.btn-ghost{background:var(--surface);color:var(--ink-2);border:1px solid var(--line-2)}.btn-ghost:hover:not(:disabled){border-color:var(--brand);color:var(--brand)}.btn-soft{background:var(--brand-soft);color:var(--brand)}.btn-soft:hover:not(:disabled){background:#e0e7ff}.btn-block{width:100%}.btn-lg{padding:14px 30px;font-size:16px;border-radius:14px}.btn-sm{padding:7px 14px;font-size:13px;border-radius:10px}
+.grad-text{background:var(--brand-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}.muted{color:var(--muted)}.ink2{color:var(--ink-2)}.center{text-align:center}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-sm)}.card-hover{transition:transform .22s ease,box-shadow .22s ease}.card-hover:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:999px;font-size:12.5px;font-weight:600;background:var(--bg);color:var(--ink-2);border:1px solid var(--line-2)}.pill-brand{background:var(--brand-soft);color:var(--brand);border-color:transparent}.pill-ok{background:var(--ok-soft);color:var(--ok);border-color:transparent}.pill-warn{background:var(--warn-soft);color:#b45309;border-color:transparent}.tag{display:inline-block;padding:2px 10px;border-radius:8px;font-size:12px;font-weight:600;background:var(--bg);color:var(--ink-2)}
+.progress{height:8px;border-radius:999px;background:#eef0f5;overflow:hidden}.progress>i{display:block;height:100%;border-radius:999px;background:var(--brand-grad);transition:width .5s ease}
+.field{margin-bottom:16px}.field label{display:block;font-size:13.5px;font-weight:600;color:var(--ink-2);margin-bottom:7px}.input,.textarea,.select{width:100%;border:1.5px solid var(--line-2);border-radius:12px;padding:11px 14px;font-size:15px;background:var(--surface);color:var(--ink);outline:none;transition:border-color .2s,box-shadow .2s}.input:focus,.textarea:focus,.select:focus{border-color:var(--brand);box-shadow:0 0 0 4px rgba(79,70,229,.12)}.textarea{min-height:96px;resize:vertical}
+.auth-card{max-width:440px;margin:0 auto;padding:36px 34px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--shadow-md)}.auth-head{text-align:center;margin-bottom:26px}.auth-head .logo-big{font-size:34px}
+.navbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.navbar-inner{display:flex;align-items:center;gap:28px;height:66px}.nav-logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:18px;letter-spacing:.2px}.nav-logo .logo-mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--brand-grad);color:#fff;font-size:17px;box-shadow:0 6px 14px rgba(79,70,229,.35)}.nav-links{display:flex;gap:4px;flex:1}.nav-link{padding:8px 14px;border-radius:10px;font-size:14.5px;font-weight:600;color:var(--ink-2);transition:all .18s}.nav-link:hover{color:var(--ink);background:var(--bg)}.nav-link.active{color:var(--brand);background:var(--brand-soft)}.nav-user{display:flex;align-items:center;gap:12px}.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--brand-grad);color:#fff;font-size:15px;font-weight:700}.avatar.sm{width:30px;height:30px;font-size:13px}
+.footer{border-top:1px solid var(--line);background:var(--surface);padding:44px 0 30px;margin-top:40px}.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px}.footer h4{font-size:14px;margin-bottom:12px}.footer a.link{display:block;font-size:13.5px;color:var(--muted);padding:3px 0}.footer a.link:hover{color:var(--brand)}.footer-bottom{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.hero{position:relative;overflow:hidden;color:#fff;background:radial-gradient(1100px 500px at 12% -10%,rgba(124,58,237,.55),transparent 60%),radial-gradient(900px 500px at 88% 0%,rgba(6,182,212,.35),transparent 55%),linear-gradient(140deg,#1e1b4b 0%,#312e81 45%,#4c1d95 100%)}.hero::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,.14) 1px,transparent 1px);background-size:26px 26px;opacity:.35}.hero-inner{position:relative;z-index:1;padding:92px 0 96px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}.hero h1{font-size:48px;font-weight:800;letter-spacing:.5px;line-height:1.2}.hero h1 .hl{background:linear-gradient(120deg,#a5b4fc,#67e8f9);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.hero p.sub{color:rgba(255,255,255,.78);font-size:17px;margin:18px 0 28px;max-width:520px}.hero-stats{display:flex;gap:34px;margin-top:38px}.hero-stats b{font-size:24px;font-weight:800;display:block}.hero-stats span{font-size:13px;color:rgba(255,255,255,.6)}.hero-chip{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);font-size:13px;font-weight:600;margin:0 8px 8px 0}.hero-visual{position:relative}.float-card{background:rgba(255,255,255,.96);color:var(--ink);border-radius:var(--r-lg);padding:18px 20px;box-shadow:var(--shadow-lg);position:absolute;font-size:13.5px;animation:floaty 5s ease-in-out infinite}@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:30px;gap:16px}.sec-head h2{font-size:30px;font-weight:800}.sec-head .sub{color:var(--muted);margin-top:6px;font-size:15px}
+.grid{display:grid;gap:20px}.grid.lang{grid-template-columns:repeat(3,1fr)}.grid.level{grid-template-columns:repeat(5,1fr)}.grid.persona{grid-template-columns:repeat(3,1fr)}.grid.course{grid-template-columns:repeat(3,1fr)}.grid.stat{grid-template-columns:repeat(4,1fr)}.grid.badge{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.lang-card{position:relative;padding:24px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line);overflow:hidden;transition:all .22s ease}.lang-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}.lang-card .flag{font-size:38px}.lang-card .l-name{font-size:19px;font-weight:800;margin-top:12px}.lang-card .l-native{color:var(--muted);font-size:13px}.lang-card .l-desc{font-size:13.5px;color:var(--ink-2);margin-top:8px}.lang-card .topbar{height:4px;border-radius:999px;margin-bottom:18px}.lang-card.coming{opacity:.72}.lang-card .soon{position:absolute;top:14px;right:14px;font-size:11px;font-weight:700;color:var(--muted);background:var(--bg);padding:3px 9px;border-radius:999px}
+.level-card{padding:22px 18px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line);text-align:center;transition:all .2s}.level-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}.level-card .lv-icon{font-size:30px}.level-card .lv-name{font-weight:800;font-size:16px;margin-top:8px}.level-card .lv-tag{font-size:12px;color:var(--brand);font-weight:700;margin-top:2px}.level-card .lv-desc{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.55}
+.persona-card{padding:22px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line);transition:all .2s}.persona-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}.persona-card .p-icon{font-size:28px}.persona-card .p-name{font-weight:800;font-size:16.5px;margin:10px 0 4px}.persona-card .p-desc{font-size:13px;color:var(--ink-2)}.persona-card .p-focus{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.feature-card{padding:26px 24px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line);transition:all .2s}.feature-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}.feature-card .f-icon{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:22px;background:var(--brand-soft);margin-bottom:14px}
+.course-card{display:block;padding:22px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line);transition:all .22s;position:relative}.course-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}.course-card .cc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.course-card .cc-title{font-size:17px;font-weight:800}.course-card .cc-sub{font-size:13px;color:var(--muted);margin:4px 0 14px}.course-card .cc-foot{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;color:var(--muted)}
+.lesson-row{display:flex;align-items:center;gap:14px;padding:15px 18px;border-radius:var(--r-md);transition:background .15s;cursor:pointer}.lesson-row:hover{background:var(--bg)}.lesson-row .li-icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:19px;background:var(--brand-soft);flex-shrink:0}.lesson-row .li-title{font-weight:700;font-size:15px}.lesson-row .li-sub{font-size:12.5px;color:var(--muted)}.lesson-row .li-status{margin-left:auto;display:flex;align-items:center;gap:8px}
+.learn-shell{display:grid;grid-template-columns:240px 1fr;gap:22px;align-items:start}.learn-nav{position:sticky;top:86px;padding:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg)}.learn-nav .ln-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:11px 13px;border-radius:12px;border:none;background:transparent;font-size:14px;font-weight:600;color:var(--ink-2);transition:all .15s}.learn-nav .ln-item:hover{background:var(--bg)}.learn-nav .ln-item.active{background:var(--brand-soft);color:var(--brand)}.learn-nav .ln-item.done{color:var(--ok)}.learn-nav .ln-item .ln-check{margin-left:auto;font-size:13px}.learn-panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;min-height:480px}
+.flashcard{perspective:1200px;cursor:pointer}.flashcard-inner{position:relative;width:100%;height:250px;transform-style:preserve-3d;transition:transform .5s ease}.flashcard.flipped .flashcard-inner{transform:rotateY(180deg)}.flashcard-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r-lg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border:1px solid var(--line);background:var(--surface);background-image:radial-gradient(rgba(79,70,229,.05) 1px,transparent 1px);background-size:22px 22px}.flashcard-face.back{transform:rotateY(180deg);background:var(--brand-soft);border-color:transparent}.flashcard .fc-word{font-size:34px;font-weight:800}.flashcard .fc-phon{color:var(--muted);font-size:15px;font-family:var(--mono)}.flashcard .fc-hint{position:absolute;top:14px;right:16px;font-size:12px;color:var(--muted)}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:13px 16px;border-radius:12px;border:1.5px solid var(--line-2);background:var(--surface);font-size:15px;color:var(--ink);transition:all .15s}.opt:hover:not(:disabled){border-color:var(--brand);background:var(--brand-soft)}.opt.correct{border-color:var(--ok);background:var(--ok-soft)}.opt.wrong{border-color:var(--err);background:var(--err-soft)}.opt:disabled{cursor:default}.opt .opt-key{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:var(--bg);font-size:13px;font-weight:700;color:var(--ink-2);flex-shrink:0}.opt.correct .opt-key{background:var(--ok);color:#fff}.opt.wrong .opt-key{background:var(--err);color:#fff}
+.feedback{margin-top:14px;padding:13px 16px;border-radius:12px;font-size:14px}.feedback.ok{background:var(--ok-soft);color:var(--ok);border:1px solid #bcebd0}.feedback.bad{background:var(--err-soft);color:var(--err);border:1px solid #fecdca}
+.stat-card{padding:20px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line);display:flex;gap:14px;align-items:center}.stat-card .s-icon{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:20px;flex-shrink:0}.stat-card b{font-size:22px;display:block;line-height:1.2}.stat-card span{font-size:12.5px;color:var(--muted)}
+.badge-item{padding:18px 12px;border-radius:var(--r-md);text-align:center;border:1px solid var(--line);background:var(--surface);transition:all .2s}.badge-item.locked{opacity:.42;filter:grayscale(1)}.badge-item .b-icon{font-size:32px}.badge-item b{display:block;font-size:13px;margin-top:8px}.badge-item span{font-size:11.5px;color:var(--muted)}
+.post-card{padding:22px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line);margin-bottom:16px}.post-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}.post-head .ph-name{font-weight:700;font-size:14.5px}.post-head .ph-time{font-size:12px;color:var(--muted)}.post-body{font-size:15px;line-height:1.7;white-space:pre-wrap}.post-actions{display:flex;gap:8px;margin-top:14px}.post-actions .btn{padding:6px 13px;font-size:13px;border-radius:999px}.comment{display:flex;gap:10px;padding:12px 0;border-top:1px dashed var(--line);font-size:13.5px}
+.dash-hero{border-radius:var(--r-xl);padding:30px;color:#fff;position:relative;overflow:hidden;background:radial-gradient(600px 300px at 90% -20%,rgba(6,182,212,.4),transparent 60%),linear-gradient(135deg,#312e81,#4c1d95)}.dash-hero .dh-greet{font-size:26px;font-weight:800}.dash-hero .dh-sub{color:rgba(255,255,255,.75);font-size:14.5px;margin-top:6px}.streak-flame{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);font-weight:700}
+.bar-row{display:flex;align-items:center;gap:10px;font-size:13px}.bar-row .bar-label{width:44px;color:var(--muted);flex-shrink:0}.bar-row .progress{flex:1}
+.pick-card{border:2px solid var(--line-2);border-radius:var(--r-lg);padding:18px;text-align:center;background:var(--surface);cursor:pointer;transition:all .16s;width:100%}.pick-card:hover{border-color:var(--brand);transform:translateY(-2px)}.pick-card.sel{border-color:var(--brand);background:var(--brand-soft);box-shadow:0 0 0 4px rgba(79,70,229,.12)}.pick-card .pk-icon{font-size:26px}.pick-card b{display:block;margin-top:6px;font-size:14.5px}.pick-card span{font-size:12px;color:var(--muted)}
+.empty{text-align:center;padding:60px 20px;color:var(--muted)}.empty .e-icon{font-size:44px;margin-bottom:12px}
+.toast-wrap{position:fixed;top:84px;right:20px;z-index:100;display:flex;flex-direction:column;gap:10px}.toast{display:flex;align-items:center;gap:10px;background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;font-weight:600;box-shadow:var(--shadow-lg);animation:toast-in .3s ease}.toast.success{background:linear-gradient(135deg,#16a34a,#059669)}.toast.info{background:linear-gradient(135deg,#4f46e5,#7c3aed)}@keyframes toast-in{from{transform:translateX(30px);opacity:0}to{transform:none;opacity:1}}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden}.confetti{position:absolute;top:-12px;width:10px;height:16px;border-radius:2px;animation:confetti-fall linear forwards}@keyframes confetti-fall{to{transform:translateY(110vh) rotate(720deg)}}
+.modal-mask{position:fixed;inset:0;background:rgba(16,24,40,.5);backdrop-filter:blur(3px);z-index:80;display:grid;place-items:center;padding:20px;animation:fade-in .18s ease}.modal{background:var(--surface);border-radius:var(--r-xl);padding:26px;max-width:560px;width:100%;box-shadow:var(--shadow-lg);max-height:82vh;overflow:auto;animation:pop-in .22s ease;position:relative}@keyframes fade-in{from{opacity:0}}@keyframes pop-in{from{transform:scale(.96);opacity:0}}@keyframes bounce-in{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1)}}.bounce-in{animation:bounce-in .45s ease}
+.rec-btn{width:76px;height:76px;border-radius:50%;border:none;font-size:26px;background:var(--brand-grad);color:#fff;box-shadow:var(--shadow-brand);transition:transform .15s;position:relative}.rec-btn:hover{transform:scale(1.06)}.rec-btn.recording{animation:pulse 1.2s infinite}.rec-btn:disabled{opacity:.5;cursor:not-allowed}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(239,68,68,.55)}70%{box-shadow:0 0 0 22px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
+.steps{display:flex;align-items:center;gap:8px;margin-bottom:26px}.step{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--muted)}.step .s-dot{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px}.step.active{color:var(--brand)}.step.active .s-dot{background:var(--brand-grad);color:#fff}.step.done .s-dot{background:var(--ok);color:#fff}.step-line{flex:1;height:2px;background:var(--line-2);border-radius:2px}
+.week-bars{display:flex;gap:10px;align-items:flex-end;height:130px}.week-bars .wb{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11.5px;color:var(--muted)}.week-bars .wb i{width:100%;max-width:34px;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#a5b4fc,#4f46e5);min-height:4px;transition:height .4s ease}
+@media(max-width:1024px){.grid.lang,.grid.persona,.grid.course{grid-template-columns:repeat(2,1fr)}.grid.level{grid-template-columns:repeat(3,1fr)}.hero-inner{grid-template-columns:1fr;padding:64px 0}.hero-visual{display:none}.learn-shell{grid-template-columns:1fr}.learn-nav{position:static;display:flex;overflow-x:auto;gap:6px}.learn-nav .ln-item{width:auto;white-space:nowrap}}
+@media(max-width:640px){.grid.lang,.grid.persona,.grid.course,.grid.level,.grid.stat{grid-template-columns:1fr}.nav-links{display:none}.hero h1{font-size:34px}.section{padding:48px 0}.footer-grid{grid-template-columns:1fr 1fr}.flashcard-inner{height:210px}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+/* ===== 页面错误捕获：把详细错误信息显示在页面上，便于排查 ===== */
+var LF_LOGS = [];
+window.__LF_LOGS = LF_LOGS;
+(function () {
+  var origErr = console.error.bind(console);
+  console.error = function () {
+    try { LF_LOGS.push(Array.prototype.map.call(arguments, function (a) { return typeof a === 'string' ? a : (a && a.message ? a.message : String(a)); }).join(' | ')); } catch (e) {}
+    origErr.apply(null, arguments);
+  };
+})();
+function LF_esc(s) {
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+window.addEventListener('error', function (e) {
+  var d = document.getElementById('root');
+  var isResource = !e.message && e.target && e.target.src;
+  var body = isResource
+    ? '资源加载失败（多为网络原因）：<b>' + LF_esc(e.target.src) + '</b><br>请刷新重试，或检查网络后重开页面。'
+    : '错误信息：<b>' + LF_esc(e.message || '未知') + '</b><br>' + LF_esc(e.filename || '') + ':' + (e.lineno || '') + '<br><pre>' + LF_esc(e.error && e.error.stack ? e.error.stack : '') + '</pre>';
+  var logs = LF_LOGS.slice(-6).map(function (l) { return LF_esc(l); }).join('<br>');
+  if (d) d.innerHTML = '<div style="padding:36px 28px;font-family:sans-serif;max-width:860px;margin:0 auto"><h3 style="color:#ef4444">⚠ 页面运行出错</h3>' + body + (logs ? '<h4 style="margin:14px 0 4px;color:#475467">最近控制台输出：</h4><div style="background:#f6f7fb;border-radius:10px;padding:12px;font-size:12.5px;color:#475467;white-space:pre-wrap">' + logs + '</div>' : '') + '<p style="color:#98a2b3;font-size:13px;margin-top:12px">请把以上内容发给我排查</p></div>';
+});
+window.addEventListener('unhandledrejection', function (e) {
+  var d = document.getElementById('root');
+  var msg = (e.reason && e.reason.message) ? e.reason.message : String(e.reason);
+  var st = e.reason && e.reason.stack ? e.reason.stack : '';
+  if (d) d.innerHTML = '<div style="padding:36px 28px;font-family:sans-serif;max-width:860px;margin:0 auto"><h3 style="color:#ef4444">⚠ 异步运行错误</h3><b>' + LF_esc(msg) + '</b><pre>' + LF_esc(st) + '</pre><p style="color:#98a2b3;font-size:13px;margin-top:12px">请把以上内容发给我排查</p></div>';
+});
+</script>
+<script>
+window.__LF = {};
+</script>
+<script type="text/babel" data-presets="react">
+/* ===== 运行环境垫片（替代 import）===== */
+const ReactRouterDOM_LIB = window.ReactRouterDOM;
+const { HashRouter, Routes, Route, Link, NavLink, Navigate, Outlet, useLocation, useNavigate, useParams, useSearchParams } = ReactRouterDOM_LIB;
+const { useState, useEffect, useMemo, useRef, useCallback, createContext, useContext } = window.React;
+
+/* ============================================================
+   语流 LinguaFlow · 数据层（data.js）
+   ============================================================ */
+const LEVELS = [
+  { id: 'starter',    name: '零基础',   icon: '🌱', tag: '从零开始', desc: '字母发音、最基础词汇与日常寒暄', xp: 0 },
+  { id: 'elementary', name: '小学水平', icon: '🎒', tag: '打牢地基', desc: '基础词汇、简单句型与生活场景表达', xp: 600 },
+  { id: 'junior',     name: '初中水平', icon: '📘', tag: '日常会话', desc: '高频词汇、核心语法与情景对话', xp: 1600 },
+  { id: 'senior',     name: '高中水平', icon: '📚', tag: '进阶提升', desc: '进阶语法、学术词汇与流畅表达', xp: 3200 },
+  { id: 'advanced',   name: '专业等级', icon: '🎓', tag: '专业深耕', desc: '母语级表达、领域语料与思辨能力', xp: 6400 },
+];
+
+const PERSONAS = [
+  { id: 'abroad',      name: '出国留学', icon: '✈️', desc: '备考冲刺、学术写作与海外校园生活场景', focus: ['雅思 / 托福', '学术写作', '校园口语'], color: '#2563EB' },
+  { id: 'career',      name: '职场商务', icon: '💼', desc: '商务会议、邮件沟通与跨文化协作表达', focus: ['商务会话', '邮件写作', '面试表达'], color: '#0EA5E9' },
+  { id: 'translation', name: '文学翻译', icon: '📖', desc: '文学鉴赏、翻译技巧与双语思维深度训练', focus: ['文本精读', '翻译练习', '文化意象'], color: '#8B5CF6' },
+  { id: 'travel',      name: '旅游出行', icon: '🧳', desc: '出行必备表达与目的地文化融入', focus: ['问路点餐', '住宿出行', '文化礼仪'], color: '#F59E0B' },
+  { id: 'exam',        name: '考试应试', icon: '🏆', desc: '系统备考规划与高效提分策略', focus: ['题型训练', '词汇攻坚', '真题解析'], color: '#EF4444' },
+  { id: 'interest',    name: '兴趣文化', icon: '🎌', desc: '从影视、动漫与音乐中轻松进阶', focus: ['追剧学语言', '歌词跟唱', '社交表达'], color: '#EC4899' },
+];
+
+const LANGUAGES = [
+  { id: 'en', name: '英语', native: 'English', flag: '🇬🇧', desc: '全球最通用的交流语言', color: '#2563EB', tts: 'en-US' },
+  { id: 'ja', name: '日语', native: '日本語', flag: '🇯🇵', desc: '动漫与东方文化的进阶之选', color: '#E11D48', tts: 'ja-JP' },
+  { id: 'ko', name: '韩语', native: '한국어', flag: '🇰🇷', desc: '潮流文化与 K-Pop 的通行证', color: '#7C3AED', tts: 'ko-KR' },
+  { id: 'fr', name: '法语', native: 'Français', flag: '🇫🇷', desc: '浪漫之都的优雅表达', color: '#0EA5E9', tts: 'fr-FR', comingSoon: true },
+  { id: 'de', name: '德语', native: 'Deutsch', flag: '🇩🇪', desc: '严谨思维的精准语言', color: '#F59E0B', tts: 'de-DE', comingSoon: true },
+  { id: 'es', name: '西班牙语', native: 'Español', flag: '🇪🇸', desc: '世界第三大语种的热情', color: '#EF4444', tts: 'es-ES', comingSoon: true },
+];
+
+const MODULES = [
+  { id: 'vocab',     name: '单词记忆', icon: '🃏', desc: '闪卡速记 · 拼写测验' },
+  { id: 'grammar',   name: '语法练习', icon: '✍️', desc: '规则精讲 · 即时纠错' },
+  { id: 'listening', name: '听力训练', icon: '🎧', desc: '情景对话 · 理解检测' },
+  { id: 'speaking',  name: '口语跟读', icon: '🎙️', desc: '跟读模仿 · 发音反馈' },
+];
+  </script>
+<script type="text/babel" data-presets="react">
+const EN = {
+  tts: 'en-US',
+  words: {
+    starter: [
+      { text: 'hello',      phonetic: '/həˈloʊ/',        meaning: '你好', example: 'Hello! Nice to meet you.', exampleCn: '你好！很高兴认识你。' },
+      { text: 'thanks',     phonetic: '/θæŋks/',         meaning: '谢谢', example: 'Thanks for your help.', exampleCn: '谢谢你的帮助。' },
+      { text: 'water',      phonetic: '/ˈwɔːtər/',       meaning: '水', example: 'I drink water every day.', exampleCn: '我每天喝水。' },
+      { text: 'book',       phonetic: '/bʊk/',           meaning: '书', example: 'This is my favorite book.', exampleCn: '这是我最喜欢的书。' },
+      { text: 'friend',     phonetic: '/frend/',         meaning: '朋友', example: 'She is my good friend.', exampleCn: '她是我的好朋友。' },
+      { text: 'morning',    phonetic: '/ˈmɔːrnɪŋ/',      meaning: '早晨', example: 'Good morning, everyone!', exampleCn: '大家早上好！' },
+    ],
+    elementary: [
+      { text: 'school',     phonetic: '/skuːl/',         meaning: '学校', example: 'We go to school by bus.', exampleCn: '我们坐公交去上学。' },
+      { text: 'teacher',    phonetic: '/ˈtiːtʃər/',      meaning: '老师', example: 'Our teacher is very kind.', exampleCn: '我们的老师非常和蔼。' },
+      { text: 'weather',    phonetic: '/ˈweðər/',        meaning: '天气', example: 'The weather is nice today.', exampleCn: '今天天气很好。' },
+      { text: 'travel',     phonetic: '/ˈtrævl/',        meaning: '旅行', example: 'I love to travel around the world.', exampleCn: '我喜欢环游世界。' },
+      { text: 'market',     phonetic: '/ˈmɑːrkɪt/',      meaning: '市场', example: 'The market is crowded on weekends.', exampleCn: '周末市场很拥挤。' },
+      { text: 'happy',      phonetic: '/ˈhæpi/',         meaning: '开心的', example: 'I am so happy to see you.', exampleCn: '见到你我非常开心。' },
+    ],
+    junior: [
+      { text: 'environment',  phonetic: '/ɪnˈvaɪrənmənt/', meaning: '环境', example: 'We should protect the environment.', exampleCn: '我们应该保护环境。' },
+      { text: 'experience',   phonetic: '/ɪkˈspɪriəns/',    meaning: '经验；经历', example: 'Travel gives you rich experience.', exampleCn: '旅行给你丰富的阅历。' },
+      { text: 'conversation', phonetic: '/ˌkɑːnvərˈseɪʃn/', meaning: '对话', example: 'We had a long conversation.', exampleCn: '我们进行了一次长谈。' },
+      { text: 'opportunity',  phonetic: '/ˌɑːpərˈtuːnəti/', meaning: '机会', example: 'This is a great opportunity for you.', exampleCn: '这对你是个绝佳的机会。' },
+      { text: 'improve',      phonetic: '/ɪmˈpruːv/',       meaning: '提高', example: 'Practice helps improve your English.', exampleCn: '练习有助于提高你的英语。' },
+      { text: 'achieve',      phonetic: '/əˈtʃiːv/',        meaning: '实现；达成', example: 'You can achieve your dream.', exampleCn: '你能实现你的梦想。' },
+    ],
+    senior: [
+      { text: 'analyze',     phonetic: '/ˈænəlaɪz/',     meaning: '分析', example: 'Let us analyze the data carefully.', exampleCn: '让我们仔细分析这些数据。' },
+      { text: 'significant', phonetic: '/sɪɡˈnɪfɪkənt/', meaning: '重要的；显著的', example: 'This is a significant discovery.', exampleCn: '这是一个重大发现。' },
+      { text: 'perspective', phonetic: '/pərˈspektɪv/',  meaning: '视角；观点', example: 'See it from another perspective.', exampleCn: '换个视角看待它。' },
+      { text: 'influence',   phonetic: '/ˈɪnfluəns/',    meaning: '影响', example: 'Media influences public opinion.', exampleCn: '媒体影响公众舆论。' },
+      { text: 'alternative', phonetic: '/ɔːlˈtɜːrnətɪv/', meaning: '替代方案', example: 'We need an alternative plan.', exampleCn: '我们需要一个备选方案。' },
+      { text: 'demonstrate', phonetic: '/ˈdemənstreɪt/', meaning: '证明；展示', example: 'The experiment demonstrates the theory.', exampleCn: '实验证明了该理论。' },
+    ],
+    advanced: [
+      { text: 'nuanced',    phonetic: '/ˈnuːɑːnst/',    meaning: '细致微妙的', example: 'The novel has nuanced characters.', exampleCn: '这部小说的人物刻画细致入微。' },
+      { text: 'eloquent',   phonetic: '/ˈeləkwənt/',    meaning: '雄辩的；有说服力的', example: 'She gave an eloquent speech.', exampleCn: '她发表了雄辩的演讲。' },
+      { text: 'plausible',  phonetic: '/ˈplɔːzəbl/',    meaning: '貌似可信的', example: 'His excuse sounds plausible.', exampleCn: '他的借口听起来貌似可信。' },
+      { text: 'reconcile',  phonetic: '/ˈrekənsaɪl/',   meaning: '调和；使和解', example: 'We must reconcile the two views.', exampleCn: '我们必须调和这两种观点。' },
+      { text: 'resonate',   phonetic: '/ˈrezəneɪt/',    meaning: '引起共鸣', example: 'Her words resonate with young people.', exampleCn: '她的话引起了年轻人的共鸣。' },
+      { text: 'scrutinize', phonetic: '/ˈskruːtənaɪz/', meaning: '仔细审查', example: 'Experts scrutinize every detail.', exampleCn: '专家们仔细审查每一个细节。' },
+    ],
+  },
+  grammar: {
+    starter: {
+      title: '主系表结构',
+      intro: '最简单的句子由「主语 + be 动词 + 表语」构成，用来介绍人、物或状态。',
+      pattern: '主语 + am / is / are + 表语',
+      examples: [
+        { src: 'This is a book.', cn: '这是一本书。' },
+        { src: 'She is my friend.', cn: '她是我的朋友。' },
+      ],
+      quiz: [
+        { q: '“他是我的老师。” 的正确翻译是？', opts: ['He is my teacher.', 'He are my teacher.', 'Him is my teacher.'], ans: 0, why: 'be 动词第三人称单数用 is，主语用主格 He。' },
+        { q: 'I ___ a student.', opts: ['is', 'am', 'are'], ans: 1, why: '主语是 I 时，be 动词固定用 am。' },
+      ],
+    },
+    elementary: {
+      title: '一般现在时 & 现在进行时',
+      intro: '一般现在时表习惯与事实，现在进行时表此刻正在发生的事，两者常搭配的时间词不同。',
+      pattern: 'do / does（一般现在时）；am/is/are + doing（进行时）',
+      examples: [
+        { src: 'She reads books every night.', cn: '她每晚都读书。' },
+        { src: 'She is reading a book now.', cn: '她现在正在读书。' },
+      ],
+      quiz: [
+        { q: '选择正确的时态：Look! It ___ outside.', opts: ['rains', 'is raining', 'rained'], ans: 1, why: 'Look! 提示此刻正在下雨，用现在进行时。' },
+        { q: 'My father ___ to work by car every day.', opts: ['go', 'goes', 'is going'], ans: 1, why: 'every day 表习惯，主语第三人称单数，动词加 -es。' },
+      ],
+    },
+    junior: {
+      title: '比较级与最高级',
+      intro: '两者比较用比较级（-er / more），三者以上比较用最高级（-est / most）。',
+      pattern: '比较级 + than；the + 最高级 + 范围',
+      examples: [
+        { src: 'This lesson is easier than that one.', cn: '这节课比那节简单。' },
+        { src: 'She is the best student in our class.', cn: '她是我们班最好的学生。' },
+      ],
+      quiz: [
+        { q: 'This movie is ___ than the last one.', opts: ['interesting', 'more interesting', 'most interesting'], ans: 1, why: '较长形容词的比较级用 more + 原级，与 than 连用。' },
+        { q: 'Mount Qomolangma is the ___ mountain in the world.', opts: ['high', 'higher', 'highest'], ans: 2, why: 'in the world 表范围，三者以上用最高级。' },
+      ],
+    },
+    senior: {
+      title: '定语从句',
+      intro: '定语从句用来修饰名词，关系代词 who 指人、which 指物、that 两者皆可。',
+      pattern: '先行词 + who / which / that + 从句',
+      examples: [
+        { src: 'The girl who sings well is my sister.', cn: '唱歌很好听的女孩是我妹妹。' },
+        { src: 'This is the book that I bought yesterday.', cn: '这就是我昨天买的那本书。' },
+      ],
+      quiz: [
+        { q: 'The man ___ is standing there is my uncle.', opts: ['who', 'which', 'whom'], ans: 0, why: '先行词 the man 指人且在从句中作主语，用 who。' },
+        { q: 'I like the coffee ___ you made.', opts: ['who', 'which', 'whose'], ans: 1, why: '先行词 the coffee 指物，用 which。' },
+      ],
+    },
+    advanced: {
+      title: '虚拟语气',
+      intro: '虚拟语气表达与事实相反的假设：对现在的假设用过去式，对过去的假设用 had + 过去分词。',
+      pattern: 'If + 过去式 / had done，主语 + would / could + 动词原形 / have done',
+      examples: [
+        { src: 'If I were you, I would take the job.', cn: '如果我是你，我会接受这份工作。' },
+        { src: 'If she had studied harder, she would have passed.', cn: '如果她当初更努力，就通过考试了。' },
+      ],
+      quiz: [
+        { q: 'If I ___ you, I would not say that.', opts: ['am', 'were', 'was'], ans: 1, why: '对现在的虚拟假设，be 动词一律用 were。' },
+        { q: 'If he had arrived earlier, he ___ the meeting.', opts: ['would catch', 'would have caught', 'catches'], ans: 1, why: '对过去事实的虚拟，主句用 would have + 过去分词。' },
+      ],
+    },
+  },
+  listening: {
+    starter: {
+      title: '初次见面 · 问候',
+      script: 'A: Hello! How are you?\nB: I am fine, thank you. And you?\nA: I am great, thanks. Nice to see you!\nB: Nice to see you too. Have a good day!',
+      cn: 'A：你好！你好吗？\nB：我很好，谢谢。你呢？\nA：我很好，谢谢。见到你真高兴！\nB：我也很高兴见到你。祝你今天愉快！',
+      questions: [
+        { q: 'How is B?', opts: ['Fine', 'Tired', 'Busy'], ans: 0, why: 'B 回答 "I am fine"——我很好。' },
+        { q: 'What does A say at the end?', opts: ['Good night!', 'Have a good day!', 'See you tomorrow!'], ans: 1, why: 'A 最后说的是 "Have a good day!"（祝你今天愉快）。' },
+        { q: 'The dialogue is mostly about ____.', opts: ['weather', 'greeting', 'shopping'], ans: 1, why: '整段对话是初次见面的问候寒暄。' },
+      ],
+    },
+    elementary: {
+      title: '在市场买东西',
+      script: 'A: Good morning! How much are these apples?\nB: They are three yuan a kilo.\nA: I would like two kilos, please.\nB: OK, here you are. That will be six yuan.\nA: Here is the money. Thank you!\nB: You are welcome!',
+      cn: 'A：早上好！这些苹果多少钱？\nB：三元一公斤。\nA：我要两公斤。\nB：好的，给您，一共六元。\nA：给你钱，谢谢！\nB：不客气！',
+      questions: [
+        { q: 'What does A want to buy?', opts: ['Bananas', 'Apples', 'Oranges'], ans: 1, why: 'A 询问的是 apples（苹果）的价格。' },
+        { q: 'How much do two kilos cost?', opts: ['Three yuan', 'Five yuan', 'Six yuan'], ans: 2, why: '每公斤三元，两公斤共六元。' },
+        { q: 'Where does the dialogue happen?', opts: ['In a market', 'In a school', 'In a library'], ans: 0, why: '从价格和购买量可判断是在市场购物。' },
+      ],
+    },
+    junior: {
+      title: '周末计划',
+      script: 'A: What are you going to do this weekend?\nB: I am going hiking with my classmates on Saturday.\nA: Sounds fun! I heard the weather will be sunny.\nB: Great! Would you like to join us?\nA: Sure, I would love to. Where shall we meet?\nB: Let us meet at the park gate at eight.',
+      cn: 'A：这周末你打算做什么？\nB：周六我要和同学去远足。\nA：听起来不错！我听说会是晴天。\nB：太好了！你想一起来吗？\nA：当然，我很乐意。我们在哪里碰面？\nB：早上八点公园门口见吧。',
+      questions: [
+        { q: 'When will B go hiking?', opts: ['On Sunday', 'On Saturday', 'On Friday'], ans: 1, why: 'B 说 "on Saturday"——周六去远足。' },
+        { q: 'What will the weather be like?', opts: ['Sunny', 'Rainy', 'Cloudy'], ans: 0, why: 'A 听说周末会是 sunny（晴天）。' },
+        { q: 'Where will they meet?', opts: ['At the station', 'At the park gate', 'At the mall'], ans: 1, why: '约定在公园门口（park gate）八点集合。' },
+      ],
+    },
+    senior: {
+      title: '校园讲座片段',
+      script: 'Good morning, everyone. Today I would like to talk about the influence of technology on our daily communication. Studies show that while we send more messages than ever, face-to-face conversations are decreasing. This shift affects how we build trust and empathy with others. I encourage you to reflect on your own communication habits this week.',
+      cn: '大家早上好。今天我想谈谈科技对日常沟通的影响。研究表明，尽管我们发送的信息比以往任何时候都多，面对面的交谈却在减少。这种转变影响了我们与他人建立信任与同理心的方式。我鼓励你们这周反思自己的沟通习惯。',
+      questions: [
+        { q: 'What is the lecture mainly about?', opts: ['Technology and communication', 'History of messages', 'How to send emails'], ans: 0, why: '讲座主题是科技对日常沟通的影响。' },
+        { q: 'According to the lecture, face-to-face conversations are ____.', opts: ['increasing', 'decreasing', 'unchanged'], ans: 1, why: '讲座指出面对面的交谈在减少（decreasing）。' },
+        { q: 'What does the speaker encourage students to do?', opts: ['Send more messages', 'Reflect on communication habits', 'Stop using phones'], ans: 1, why: '演讲者鼓励大家反思自己的沟通习惯。' },
+      ],
+    },
+    advanced: {
+      title: '商务谈判观点',
+      script: 'Let me summarize our position. We believe the proposed budget is both ambitious and achievable, provided we streamline our production process. However, we remain open to alternative pricing structures if your team can demonstrate clear long-term value. Ultimately, our goal is a partnership built on mutual growth, not a short-term deal.',
+      cn: '让我总结一下我们的立场。我们认为，只要优化生产流程，这份预算既雄心勃勃又切实可行。但如果贵团队能证明长期价值，我们也对替代定价方案持开放态度。归根结底，我们的目标是建立在共同成长之上的伙伴关系，而不是短期交易。',
+      questions: [
+        { q: 'What is the speaker’s attitude toward the budget?', opts: ['Fully opposed', 'Supportive with conditions', 'Indifferent'], ans: 1, why: '发言人认为预算可行，但前提是优化生产流程——有条件支持。' },
+        { q: 'The speaker is open to ____.', opts: ['ending the deal', 'alternative pricing', 'lowering quality'], ans: 1, why: '如果对方能证明长期价值，愿意考虑替代定价方案。' },
+        { q: 'What is the ultimate goal of the negotiation?', opts: ['A short-term deal', 'A partnership for mutual growth', 'Reducing budget'], ans: 1, why: '目标是建立在共同成长之上的长期伙伴关系。' },
+      ],
+    },
+  },
+  speaking: {
+    starter: {
+      prompt: '用目标语言做一次简单自我介绍',
+      reference: 'Hello! My name is Lily. I am very happy to meet you.',
+      keywords: ['hello', 'name', 'happy', 'meet'],
+      tip: '先慢速跟读，注意连读，如 "My name is" 可自然连读。',
+    },
+    elementary: {
+      prompt: '在咖啡馆点一杯饮品',
+      reference: 'I would like a cup of coffee with milk, please.',
+      keywords: ['would like', 'cup', 'please'],
+      tip: '用 "I would like..." 比 "I want..." 更礼貌得体。',
+    },
+    junior: {
+      prompt: '介绍你的工作和周末爱好',
+      reference: 'I work as an engineer, and I enjoy traveling on weekends.',
+      keywords: ['work as', 'enjoy', 'weekends'],
+      tip: '介绍自己时先讲职业，再用 and 连接爱好，句尾降调自然结束。',
+    },
+    senior: {
+      prompt: '就「在线学习的重要性」发表观点',
+      reference: 'In my opinion, online learning is becoming increasingly important for modern students.',
+      keywords: ['in my opinion', 'increasingly', 'modern'],
+      tip: '用 "In my opinion" 引出观点，重读 important 一词突出立场。',
+    },
+    advanced: {
+      prompt: '用一段开场白开启主题演讲',
+      reference: 'It is a great honor to be here today to discuss the future of language education.',
+      keywords: ['a great honor', 'discuss', 'future'],
+      tip: '正式开场注意停顿与重音：It is a GREAT honor...，语速放稳显从容。',
+    },
+  },
+};
+</script>
+<script type="text/babel" data-presets="react">
+const JA = {
+  tts: 'ja-JP',
+  words: {
+    starter: [
+      { text: 'こんにちは',   phonetic: 'konnichiwa',  meaning: '你好', example: 'こんにちは、田中です。', exampleCn: '你好，我是田中。' },
+      { text: 'ありがとう',   phonetic: 'arigatou',    meaning: '谢谢', example: 'ありがとうございます。', exampleCn: '非常感谢。' },
+      { text: 'すみません',   phonetic: 'sumimasen',   meaning: '对不起；劳驾', example: 'すみません、お手洗いはどこですか。', exampleCn: '请问，洗手间在哪里？' },
+      { text: 'はい',         phonetic: 'hai',         meaning: '是；好的', example: 'はい、わかりました。', exampleCn: '好的，我明白了。' },
+      { text: 'みず',         phonetic: 'mizu',        meaning: '水', example: 'みずを一杯ください。', exampleCn: '请给我一杯水。' },
+      { text: 'さようなら',   phonetic: 'sayounara',   meaning: '再见', example: 'さようなら、また明日。', exampleCn: '再见，明天见。' },
+    ],
+    elementary: [
+      { text: 'たべる',   phonetic: 'taberu',   meaning: '吃', example: '朝ご飯をたべます。', exampleCn: '我吃早饭。' },
+      { text: 'のむ',     phonetic: 'nomu',     meaning: '喝', example: 'コーヒーをのむのが好きです。', exampleCn: '我喜欢喝咖啡。' },
+      { text: 'いく',     phonetic: 'iku',      meaning: '去', example: '学校へいきます。', exampleCn: '我去学校。' },
+      { text: 'みる',     phonetic: 'miru',     meaning: '看', example: '映画をみます。', exampleCn: '我看电影。' },
+      { text: 'かう',     phonetic: 'kau',      meaning: '买', example: '本をかいました。', exampleCn: '我买了书。' },
+      { text: 'たかい',   phonetic: 'takai',    meaning: '贵的', example: 'この店はちょっとたかいです。', exampleCn: '这家店有点贵。' },
+    ],
+    junior: [
+      { text: 'でんしゃ',   phonetic: 'densha',    meaning: '电车', example: 'でんしゃで会社へ行きます。', exampleCn: '我乘电车去公司。' },
+      { text: 'かいしゃ',   phonetic: 'kaisha',    meaning: '公司', example: 'かいしゃは駅の近くです。', exampleCn: '公司在车站附近。' },
+      { text: 'しごと',     phonetic: 'shigoto',   meaning: '工作', example: 'しごとは忙しいです。', exampleCn: '工作很忙。' },
+      { text: 'ともだち',   phonetic: 'tomodachi', meaning: '朋友', example: 'ともだちと遊びます。', exampleCn: '我和朋友玩。' },
+      { text: 'やすみ',     phonetic: 'yasumi',    meaning: '休息；假期', example: '週末はやすみです。', exampleCn: '周末休息。' },
+      { text: 'はなし',     phonetic: 'hanashi',   meaning: '谈话；故事', example: '先生とはなしをします。', exampleCn: '我和老师谈话。' },
+    ],
+    senior: [
+      { text: 'けんきゅう',   phonetic: 'kenkyuu',    meaning: '研究', example: '日本文化をけんきゅうしています。', exampleCn: '我在研究日本文化。' },
+      { text: 'はってん',     phonetic: 'hatten',     meaning: '发展', example: '技術のはってんが速いです。', exampleCn: '技术发展很快。' },
+      { text: 'かんきょう',   phonetic: 'kankyou',    meaning: '环境', example: 'かんきょうを守りましょう。', exampleCn: '让我们一起保护环境。' },
+      { text: 'きかい',       phonetic: 'kikai',      meaning: '机会', example: 'いいきかいを逃さないでください。', exampleCn: '请不要错过好机会。' },
+      { text: 'せいこう',     phonetic: 'seikou',     meaning: '成功', example: '試験にせいこうしました。', exampleCn: '我考试成功了。' },
+      { text: 'どりょく',     phonetic: 'doryoku',    meaning: '努力', example: 'どりょくが実りました。', exampleCn: '努力有了回报。' },
+    ],
+    advanced: [
+      { text: 'ほんしつ',   phonetic: 'honshitsu', meaning: '本质', example: '問題のほんしつを考える。', exampleCn: '思考问题的本质。' },
+      { text: 'じつげん',   phonetic: 'jitsugen',  meaning: '实现', example: '夢をじつげんする。', exampleCn: '实现梦想。' },
+      { text: 'はかる',     phonetic: 'hakaru',    meaning: '衡量；测量', example: '成果をはかる指標。', exampleCn: '衡量成果的指标。' },
+      { text: 'ゆうき',     phonetic: 'yuuki',     meaning: '勇气', example: 'ゆうきを出して挑戦する。', exampleCn: '鼓起勇气去挑战。' },
+      { text: 'たくみ',     phonetic: 'takumi',    meaning: '巧妙', example: 'たくみな話術に感心する。', exampleCn: '佩服巧妙的说话技巧。' },
+      { text: 'みがく',     phonetic: 'migaku',    meaning: '打磨；磨练', example: '語学力をみがく。', exampleCn: '磨练语言能力。' },
+    ],
+  },
+  grammar: {
+    starter: {
+      title: '「〜です」断定句与「は」助词',
+      intro: '日语基础句为「A は B です」，助词「は」提示主题，「です」表示断定（是）。',
+      pattern: 'A は B です。',
+      examples: [
+        { src: 'わたしは 学生です。', cn: '我是学生。' },
+        { src: 'これは 本です。', cn: '这是书。' },
+      ],
+      quiz: [
+        { q: '“我是小林。” 的正确说法是？', opts: ['わたしは 小林さんです。', 'わたしは 小林です。', '小林は わたしです。'], ans: 1, why: '自我介绍时自己的名字后不加「さん」尊称。' },
+        { q: '「これは 本です。」中「は」的作用是？', opts: ['提示主题', '表示方向', '表示所有'], ans: 0, why: '助词「は」用来提示句子的主题。' },
+      ],
+    },
+    elementary: {
+      title: '动词ます形',
+      intro: '动词ます形是日语礼貌体的核心，由辞书形变化而来，如 たべる → たべます。',
+      pattern: '动词ます形 + ます / ました',
+      examples: [
+        { src: 'ご飯を たべます。', cn: '我吃饭。（现在/将来）' },
+        { src: 'きのう 学校へ 行きました。', cn: '昨天去了学校。（过去）' },
+      ],
+      quiz: [
+        { q: '「のむ（喝）」的ます形是？', opts: ['のみます', 'のます', 'のんます'], ans: 0, why: '「のむ」连用形「のみ」+ます → のみます。' },
+        { q: '「行きました」表达的时态是？', opts: ['现在', '过去', '将来'], ans: 1, why: 'ました 是过去式标志。' },
+      ],
+    },
+    junior: {
+      title: 'て形连接',
+      intro: '「て形」用来连接动作或句子，表示先后顺序、方式或原因。',
+      pattern: '动词て形 + 后续动作',
+      examples: [
+        { src: '朝起きて、コーヒーを飲みます。', cn: '早上起床后喝咖啡。' },
+        { src: '電車に乗って、会社へ行きます。', cn: '坐电车去公司。' },
+      ],
+      quiz: [
+        { q: '「起きる」的て形是？', opts: ['起きて', '起きって', '起きで'], ans: 0, why: '一段动词て形：去「る」加「て」→ 起きて。' },
+        { q: '「歩いて、駅へ行きます」中「て」表示？', opts: ['方式', '原因', '逆接'], ans: 0, why: '此处て形表示动作的方式（步行）。' },
+      ],
+    },
+    senior: {
+      title: '被动形',
+      intro: '被动形表示「被…」，动词变化为 〜られる / 〜れる，句中用「に」引出施事者。',
+      pattern: '主体 は 施事者 に + 动词被动形',
+      examples: [
+        { src: '先生に ほめられました。', cn: '被老师表扬了。' },
+        { src: '犬に おいかけられました。', cn: '被狗追了。' },
+      ],
+      quiz: [
+        { q: '「ほめる（表扬）」的被动形是？', opts: ['ほめられる', 'ほめれる', 'ほまれる'], ans: 0, why: '一段动词被动形：去「る」+られる → ほめられる。' },
+        { q: '被动句中施事者用什么助词引出？', opts: ['は', 'に', 'を'], ans: 1, why: '被动句中「に」用来引出动作的施加者。' },
+      ],
+    },
+    advanced: {
+      title: '敬语（お〜ください）',
+      intro: '敬语在商务与正式场合使用，「お＋ます形＋ください」表示礼貌的请求。',
+      pattern: 'お + 动词连用形 + ください',
+      examples: [
+        { src: '少々お待ちください。', cn: '请稍等。' },
+        { src: 'こちらに おかけください。', cn: '请坐这里。' },
+      ],
+      quiz: [
+        { q: '「待つ」的礼貌请求形式是？', opts: ['待ってください', 'お待ちください', '待つください'], ans: 1, why: '敬语请求用「お＋待ち＋ください」。' },
+        { q: '「お読みください」的意思是？', opts: ['请读', '我读', '读完了'], ans: 0, why: 'お読みください = 请您阅读。' },
+      ],
+    },
+  },
+  listening: {
+    starter: {
+      title: '自我介绍',
+      script: 'はじめまして。わたしは タナカ です。日本から 来ました。どうぞ よろしくお願いします。',
+      cn: '初次见面。我是田中。来自日本。请多多关照。',
+      questions: [
+        { q: '说话人的名字是？', opts: ['さとう', 'たなか', 'すずき'], ans: 1, why: '原文「わたしは タナカ です」——我是田中。' },
+        { q: '说话人来自哪里？', opts: ['中国', '韩国', '日本'], ans: 2, why: '「日本から 来ました」——来自日本。' },
+        { q: '「よろしくお願いします」常用于？', opts: ['初次见面问候', '告别', '道歉'], ans: 0, why: '「请多多关照」是初次见面的常用寒暄。' },
+      ],
+    },
+    elementary: {
+      title: '在便利店买东西',
+      script: '店員：いらっしゃいませ。\n客：すみません、この お弁当は いくらですか。\n店員：400円です。\n客：じゃあ、これを ください。\n店員：ありがとうございます。500円 お預かりします。\n客：はい、おつりを 100円 いただきます。',
+      cn: '店员：欢迎光临。\n顾客：请问，这个便当多少钱？\n店员：400日元。\n顾客：那我要这个。\n店员：谢谢。收您500日元。\n顾客：好的，找回我100日元。',
+      questions: [
+        { q: '顾客在买什么？', opts: ['お弁当（便当）', 'お茶', '雑誌'], ans: 0, why: '顾客询问的是お弁当（便当）的价格。' },
+        { q: '便当多少钱？', opts: ['300円', '400円', '500円'], ans: 1, why: '店员回答「400円です」。' },
+        { q: '顾客付了500日元，应该找多少？', opts: ['50円', '100円', '200円'], ans: 1, why: '500 - 400 = 100円。' },
+      ],
+    },
+    junior: {
+      title: '在电车上问路',
+      script: 'A：すみません、渋谷駅へは どう行きますか。\nB：この電車で 三つ目の駅です。\nA：どのぐらい かかりますか。\nB：十分ぐらいです。\nA：どうも ありがとうございます。\nB：いいえ、どういたしまして。',
+      cn: 'A：请问，去涩谷站怎么走？\nB：坐这趟电车，第三个站就是。\nA：大概要多久？\nB：十分钟左右。\nA：非常感谢。\nB：不客气。',
+      questions: [
+        { q: 'A 要去哪里？', opts: ['新宿駅', '渋谷駅', '上野駅'], ans: 1, why: 'A 询问去渋谷駅（涩谷站）怎么走。' },
+        { q: '去涩谷需要坐几站？', opts: ['两个站', '三个站', '四个站'], ans: 1, why: 'B 说「三つ目の駅」——第三个站。' },
+        { q: '大约需要多长时间？', opts: ['五分钟', '十分钟', '二十分钟'], ans: 1, why: '「十分ぐらい」——十分钟左右。' },
+      ],
+    },
+    senior: {
+      title: '公司会议片段',
+      script: '本日の会議では、新製品の販売計画について 意見を 出してください。市場調査の結果、若い世代に 人気が 高まっています。ですから、SNSを 中心とした プロモーションを 提案します。皆さんの 意見を 聞かせてください。',
+      cn: '今天的会议，请大家就新产品的销售计划发表意见。市场调查结果显示，它在年轻一代中人气正在上升。因此，我提议以社交媒体为中心进行推广。请听听大家的意见。',
+      questions: [
+        { q: '会议讨论的主题是？', opts: ['新产品的销售计划', '人事安排', '办公地点'], ans: 0, why: '「新製品の販売計画」——新产品销售计划。' },
+        { q: '市场调查显示了什么？', opts: ['年轻人中人气上升', '老年人中人气上升', '销量下降'], ans: 0, why: '「若い世代に 人気が 高まっています」——年轻一代人气上升。' },
+        { q: '发言者建议用什么方式推广？', opts: ['电视广告', 'SNS（社交媒体）', '报纸'], ans: 1, why: '「SNSを 中心とした プロモーション」——以社交媒中心推广。' },
+      ],
+    },
+    advanced: {
+      title: '新闻报道片段',
+      script: '本日、政府は 再生可能エネルギーへの 投資を 拡大する 新たな政策を 発表しました。専門家は、これにより 二酸化炭素の 排出量が 大幅に 削減される と 期待しています。一方で、企業の コスト負担に ついては 今後の 課題だと 指摘しています。',
+      cn: '今天，政府公布了扩大可再生能源投资的新政策。专家期待这将大幅减少二氧化碳排放。另一方面，也有人指出企业的成本负担是今后的课题。',
+      questions: [
+        { q: '政府公布了什么？', opts: ['扩大可再生能源投资的政策', '新税率政策', '教育政策'], ans: 0, why: '「再生可能エネルギーへの 投資を 拡大する 新たな政策」——扩大可再生能源投资的新政策。' },
+        { q: '专家期待这个政策能带来什么？', opts: ['减少就业', '大幅减少二氧化碳排放', '提高房价'], ans: 1, why: '期待「排出量が 大幅に 削減される」——排放量大幅减少。' },
+        { q: '今后的课题是什么？', opts: ['企业的成本负担', '技术水平', '法律修订'], ans: 0, why: '「企業の コスト負担に ついては 今後の 課題」——企业的成本负担是课题。' },
+      ],
+    },
+  },
+  speaking: {
+    starter: {
+      prompt: '用日语做一次礼貌的自我介绍',
+      reference: 'はじめまして。わたしは リン です。どうぞ よろしくお願いします。',
+      keywords: ['はじめまして', 'わたしは', 'よろしく'],
+      tip: '「はじめまして」后稍作停顿，名字部分放慢语速，保持语调平稳。',
+    },
+    elementary: {
+      prompt: '在店里买东西时请店员拿商品',
+      reference: 'すみません、これを ください。',
+      keywords: ['すみません', 'これ', 'ください'],
+      tip: '开头用「すみません」引起注意，结尾「ください」清晰收尾。',
+    },
+    junior: {
+      prompt: '介绍自己的工作和爱好',
+      reference: 'わたしは 会社員で、週末に よく 旅行を します。',
+      keywords: ['会社員', '週末', '旅行'],
+      tip: '「会社員で」的「で」轻轻带过，句尾「します」用降调结束。',
+    },
+    senior: {
+      prompt: '就「在线学习」发表自己的观点',
+      reference: 'わたしは オンライン学習は とても 便利だと 思います。',
+      keywords: ['オンライン学習', '便利', '思います'],
+      tip: '「〜と思います」前稍作停顿，重读「便利」以表达态度。',
+    },
+    advanced: {
+      prompt: '在正式场合发表感谢致辞',
+      reference: '本日は お忙しい中、お越しいただき、誠に ありがとうございます。',
+      keywords: ['本日', 'お忙しい中', '誠に'],
+      tip: '敬语致辞注意「お越しいただき」的节奏，字与字之间平稳清晰。',
+    },
+  },
+};
+
+const KO = {
+  tts: 'ko-KR',
+  words: {
+    starter: [
+      { text: '안녕하세요',    phonetic: 'annyeonghaseyo', meaning: '你好', example: '안녕하세요, 저는 민수입니다.', exampleCn: '你好，我是敏秀。' },
+      { text: '감사합니다',    phonetic: 'gamsahamnida',   meaning: '谢谢', example: '도와주셔서 감사합니다.', exampleCn: '谢谢您的帮助。' },
+      { text: '죄송합니다',    phonetic: 'joesonghamnida', meaning: '对不起', example: '죄송합니다, 늦었습니다.', exampleCn: '对不起，我来晚了。' },
+      { text: '네',            phonetic: 'ne',             meaning: '是；好的', example: '네, 알겠습니다.', exampleCn: '好的，我知道了。' },
+      { text: '물',            phonetic: 'mul',            meaning: '水', example: '물 한 잔 주세요.', exampleCn: '请给我一杯水。' },
+      { text: '안녕히 가세요', phonetic: 'annyeonghi gaseyo', meaning: '再见（对要走的人说）', example: '안녕히 가세요, 내일 봐요.', exampleCn: '再见，明天见。' },
+    ],
+    elementary: [
+      { text: '먹다',   phonetic: 'meokda',    meaning: '吃', example: '아침을 먹습니다.', exampleCn: '我吃早饭。' },
+      { text: '마시다', phonetic: 'masida',    meaning: '喝', example: '물을 마십니다.', exampleCn: '我喝水。' },
+      { text: '가다',   phonetic: 'gada',      meaning: '去', example: '학교에 갑니다.', exampleCn: '我去学校。' },
+      { text: '보다',   phonetic: 'boda',      meaning: '看', example: '영화를 봅니다.', exampleCn: '我看电影。' },
+      { text: '사다',   phonetic: 'sada',      meaning: '买', example: '책을 샀습니다.', exampleCn: '我买了书。' },
+      { text: '비싸다', phonetic: 'bissada',   meaning: '贵', example: '이 가방은 비쌉니다.', exampleCn: '这个包很贵。' },
+    ],
+    junior: [
+      { text: '회사',     phonetic: 'hoesa',     meaning: '公司', example: '회사는 역 근처에 있어요.', exampleCn: '公司在车站附近。' },
+      { text: '친구',     phonetic: 'chingu',    meaning: '朋友', example: '친구와 같이 놀아요.', exampleCn: '我和朋友一起玩。' },
+      { text: '일',       phonetic: 'il',        meaning: '工作', example: '일이 아주 바빠요.', exampleCn: '工作非常忙。' },
+      { text: '쉬다',     phonetic: 'swida',     meaning: '休息', example: '주말에 쉬어요.', exampleCn: '周末休息。' },
+      { text: '말하다',   phonetic: 'malhada',   meaning: '说话', example: '천천히 말해 주세요.', exampleCn: '请慢慢说。' },
+      { text: '믿다',     phonetic: 'mitda',     meaning: '相信', example: '저는 그를 믿어요.', exampleCn: '我相信他。' },
+    ],
+    senior: [
+      { text: '연구',     phonetic: 'yeongu',    meaning: '研究', example: '한국 문화를 연구합니다.', exampleCn: '我研究韩国文化。' },
+      { text: '발전',     phonetic: 'baljeon',   meaning: '发展', example: '기술 발전이 빠릅니다.', exampleCn: '技术发展很快。' },
+      { text: '환경',     phonetic: 'hwankyung', meaning: '环境', example: '환경을 보호합시다.', exampleCn: '让我们保护环境。' },
+      { text: '기회',     phonetic: 'gihoe',     meaning: '机会', example: '좋은 기회를 놓치지 마세요.', exampleCn: '请不要错过好机会。' },
+      { text: '성공',     phonetic: 'seonggong', meaning: '成功', example: '시험에 성공했습니다.', exampleCn: '考试成功了。' },
+      { text: '노력',     phonetic: 'noryeok',   meaning: '努力', example: '노력이 결실을 맺었어요.', exampleCn: '努力有了成果。' },
+    ],
+    advanced: [
+      { text: '본질',       phonetic: 'bonjil',      meaning: '本质', example: '문제의 본질을 생각해요.', exampleCn: '思考问题的本质。' },
+      { text: '성취',       phonetic: 'seongchwi',   meaning: '成就', example: '작은 성취를 축하해요.', exampleCn: '为小小的成就庆祝。' },
+      { text: '조화',       phonetic: 'johwa',       meaning: '和谐', example: '자연과의 조화가 중요해요.', exampleCn: '与自然的和谐很重要。' },
+      { text: '통찰',       phonetic: 'tongchal',    meaning: '洞察', example: '그의 통찰이 놀랍습니다.', exampleCn: '他的洞察力令人惊叹。' },
+      { text: '묘미',       phonetic: 'myomi',       meaning: '妙趣', example: '언어 학습의 묘미를 느껴요.', exampleCn: '感受语言学习的妙趣。' },
+      { text: '심오하다',   phonetic: 'simohada',    meaning: '深邃的', example: '그 시는 의미가 심오합니다.', exampleCn: '那首诗意义深邃。' },
+    ],
+  },
+  grammar: {
+    starter: {
+      title: '「〜입니다」断定句与助词「은/는」',
+      intro: '韩语基础句为「A 은/는 B 입니다」，助词「은/는」提示主题，「입니다」表示断定。',
+      pattern: 'A 은/는 B 입니다.',
+      examples: [
+        { src: '저는 학생입니다.', cn: '我是学生。' },
+        { src: '이것은 책입니다.', cn: '这是书。' },
+      ],
+      quiz: [
+        { q: '“我是敏秀。” 的正确说法是？', opts: ['저는 민수입니다.', '저는 민수예요?', '민수는 저입니다.'], ans: 0, why: '「저는 ~입니다」是正式自我介绍句式。' },
+        { q: '「이것은 책입니다」中「은」的作用是？', opts: ['提示主题', '表示方向', '表示否定'], ans: 0, why: '助词「은/는」用来提示句子的主题。' },
+      ],
+    },
+    elementary: {
+      title: '动词 아요/어요 形（해요体）',
+      intro: '해요体是韩语最常用的礼貌表达，动词词干加 아요/어요 或 해요。',
+      pattern: '词干 + 아요 / 어요 / 해요',
+      examples: [
+        { src: '밥을 먹어요.', cn: '我吃饭。' },
+        { src: '학교에 가요.', cn: '我去学校。' },
+      ],
+      quiz: [
+        { q: '「가다（去）」的 해요体是？', opts: ['가요', '가아요', '갑니다요'], ans: 0, why: '词干以「아」结尾加 아요 → 가요。' },
+        { q: '「보다（看）」的 해요体是？', opts: ['보요', '봐요', '보다요'], ans: 1, why: '「보아요」缩略为「봐요」。' },
+      ],
+    },
+    junior: {
+      title: '连接词尾 -고 / -서',
+      intro: '「-고」表示并列，「-서」表示先后顺序或原因，用来连接两个动作。',
+      pattern: '动词 + 고 / 서 + 动词',
+      examples: [
+        { src: '아침에 일어나서 커피를 마셔요.', cn: '早上起床后喝咖啡。' },
+        { src: '음악을 듣고 책을 읽어요.', cn: '听音乐并看书。' },
+      ],
+      quiz: [
+        { q: '“起床后洗脸” 用哪个连接词尾？', opts: ['-고', '-서', '-지만'], ans: 1, why: '「-서」表示动作的先后顺序（起床后洗脸）。' },
+        { q: '「노래하고 춤춰요」的意思是？', opts: ['又唱歌又跳舞', '唱完歌再跳舞', '不唱也不跳'], ans: 0, why: '「-고」表示并列，两者同时进行。' },
+      ],
+    },
+    senior: {
+      title: '被动 -아지다',
+      intro: '「-아지다 / -어지다」加在动词后表示被动或状态变化。',
+      pattern: '动词词干 + 아지다 / 어지다',
+      examples: [
+        { src: '문이 닫혀 있어요.', cn: '门关着。' },
+        { src: '이 책은 많이 읽혀요.', cn: '这本书读的人很多。（被广泛阅读）' },
+      ],
+      quiz: [
+        { q: '「열다（打开）」的被动形是？', opts: ['열리다', '열어지다', '열려다'], ans: 0, why: '「열다」的被动是「열리다」（被打开）。' },
+        { q: '「닫히다」的意思是？', opts: ['打开', '被关闭', '飞走'], ans: 1, why: '「닫히다」是「닫다」的被动形，意为被关闭。' },
+      ],
+    },
+    advanced: {
+      title: '敬语 -시- 与间接引语',
+      intro: '对长辈用敬语词尾「-시-」，间接引语「~다고 하다」用来转述他人的话。',
+      pattern: '动词词干 + 시 + 词尾；引用内容 + 다고 하다',
+      examples: [
+        { src: '선생님께서 오십니다.', cn: '老师来了。（敬语）' },
+        { src: '민수 씨가 내일 온다고 했어요.', cn: '敏秀说明天来。' },
+      ],
+      quiz: [
+        { q: '「가다」对长辈的敬语形式是？', opts: ['가시다', '갑니다', '가세요?'], ans: 0, why: '「가다」词干加敬语词尾「-시-」→ 가시다。' },
+        { q: '「他说很忙」的正确转述是？', opts: ['바쁘다고 했어요', '바빠요 하고요', '바쁘게 말해요'], ans: 0, why: '间接引语「~다고 하다」转述他人话语。' },
+      ],
+    },
+  },
+  listening: {
+    starter: {
+      title: '自我介绍',
+      script: '안녕하세요. 저는 김민수입니다. 한국에서 왔습니다. 만나서 반갑습니다.',
+      cn: '你好。我是金敏秀。来自韩国。很高兴见到你。',
+      questions: [
+        { q: '说话人叫什么名字？', opts: ['김민수', '박지훈', '이수진'], ans: 0, why: '「저는 김민수입니다」——我叫金敏秀。' },
+        { q: '说话人来自哪里？', opts: ['中国', '韩国', '日本'], ans: 1, why: '「한국에서 왔습니다」——来自韩国。' },
+        { q: '「만나서 반갑습니다」的意思是？', opts: ['很高兴见到你', '再见', '对不起'], ans: 0, why: '「만나서 반갑습니다」= 见到你很高兴。' },
+      ],
+    },
+    elementary: {
+      title: '在市场买东西',
+      script: '손님: 아저씨, 이 사과 얼마예요?\n가게: 한 킬로에 3,000원이에요.\n손님: 두 킬로 주세요.\n가게: 네, 여기 있어요. 모두 6,000원이에요.\n손님: 여기 있어요. 감사합니다!\n가게: 네, 또 오세요!',
+      cn: '顾客：大叔，这苹果多少钱？\n店主：一公斤3000韩元。\n顾客：给我两公斤。\n店主：好的，给您。一共6000韩元。\n顾客：给您钱。谢谢！\n店主：好的，欢迎再来！',
+      questions: [
+        { q: '顾客买了什么？', opts: ['사과（苹果）', '배（梨）', '포도（葡萄）'], ans: 0, why: '顾客询问的是 사과（苹果）的价格。' },
+        { q: '两公斤苹果多少钱？', opts: ['3,000원', '6,000원', '9,000원'], ans: 1, why: '一公斤3000韩元，两公斤6000韩元。' },
+        { q: '这个对话发生的地点最可能是？', opts: ['시장（市场）', '학교（学校）', '도서관（图书馆）'], ans: 0, why: '从讨价还价和购买量判断是在市场。' },
+      ],
+    },
+    junior: {
+      title: '周末计划',
+      script: 'A: 이번 주말에 뭐 할 거예요?\nB: 토요일에 친구와 같이 등산할 거예요.\nA: 좋겠네요! 저도 같이 가도 돼요?\nB: 물론이죠! 오전 9시에 공원 앞에서 만나요.\nA: 좋아요, 그럼 그때 봐요!',
+      cn: 'A：这个周末打算做什么？\nB：周六要和朋友一起去爬山。\nA：真好！我也能一起去吗？\nB：当然！上午九点在公园前面见面。\nA：好的，到时候见！',
+      questions: [
+        { q: 'B 周末要做什么？', opts: ['등산（爬山）', '영화 보기（看电影）', '쇼핑（购物）'], ans: 0, why: 'B 说「등산할 거예요」——要去爬山。' },
+        { q: '他们几点在哪儿见面？', opts: ['9点在公园前', '10点在车站', '8点在学校'], ans: 0, why: '「오전 9시에 공원 앞에서 만나요」——上午9点公园前。' },
+        { q: 'A 对一起去的态度是？', opts: ['不愿意', '想一起去', '无所谓'], ans: 1, why: 'A 主动问「저도 같이 가도 돼요?」——想一起去。' },
+      ],
+    },
+    senior: {
+      title: '公司会议片段',
+      script: '오늘 회의에서는 신제품 판매 계획에 대해 의견을 주세요. 시장 조사 결과, 젊은 세대 사이에서 인기가 높아지고 있습니다. 그래서 SNS 중심의 프로모션을 제안합니다. 여러분의 의견을 듣고 싶습니다.',
+      cn: '今天的会议，请大家就新产品的销售计划发表意见。市场调查结果显示，它在年轻一代中人气正在上升。因此，我提议以社交媒体为中心进行推广。我想听听大家的意见。',
+      questions: [
+        { q: '会议讨论的主题是什么？', opts: ['신제품 판매 계획（新产品销售计划）', '인사 배치（人事安排）', '사무실 이전（办公室搬迁）'], ans: 0, why: '「신제품 판매 계획」——新产品销售计划。' },
+        { q: '市场调查显示了什么？', opts: ['年轻人中人气上升', '销量下降', '价格下降'], ans: 0, why: '「젊은 세대 사이에서 인기가 높아지고 있습니다」——年轻一代中人气上升。' },
+        { q: '发言者建议怎样推广？', opts: ['电视广告', 'SNS（社交媒体）', '报纸广告'], ans: 1, why: '「SNS 중심의 프로모션」——以社交媒体为中心的推广。' },
+      ],
+    },
+    advanced: {
+      title: '新闻报道片段',
+      script: '오늘 정부는 재생 에너지 투자를 확대하는 새로운 정책을 발표했습니다. 전문가들은 이를 통해 이산화탄소 배출량이 크게 줄어들 것으로 기대합니다. 한편, 기업의 비용 부담은 앞으로의 과제라고 지적했습니다.',
+      cn: '今天，政府公布了扩大可再生能源投资的新政策。专家期待这将大幅减少二氧化碳排放。另一方面，也有人指出企业的成本负担是今后的课题。',
+      questions: [
+        { q: '政府公布了什么？', opts: ['扩大可再生能源投资的政策', '新的税收政策', '教育改革政策'], ans: 0, why: '「재생 에너지 투자를 확대하는 새로운 정책」——扩大可再生能源投资的新政策。' },
+        { q: '专家期待什么？', opts: ['大幅减少二氧化碳排放', '增加就业机会', '提高工资'], ans: 0, why: '「이산화탄소 배출량이 크게 줄어들 것으로 기대합니다」——期待排放量大幅减少。' },
+        { q: '今后的课题是什么？', opts: ['기업의 비용 부담（企业成本负担）', '技术水平', '法律修改'], ans: 0, why: '「기업의 비용 부담은 앞으로의 과제」——企业的成本负担是课题。' },
+      ],
+    },
+  },
+  speaking: {
+    starter: {
+      prompt: '用韩语做一次礼貌的自我介绍',
+      reference: '안녕하세요. 저는 리리입니다. 만나서 반갑습니다.',
+      keywords: ['안녕하세요', '저는', '반갑습니다'],
+      tip: '「안녕하세요」发音清晰，名字部分放慢语速，「반갑습니다」自然收尾。',
+    },
+    elementary: {
+      prompt: '在店里点一份菜单上的食品',
+      reference: '이거 주세요. 맛있어 보여요.',
+      keywords: ['이거', '주세요', '맛있어'],
+      tip: '「이거 주세요」简洁礼貌，加一句「맛있어 보여요」显得更自然亲切。',
+    },
+    junior: {
+      prompt: '介绍自己的工作与爱好',
+      reference: '저는 회사원이고, 주말에 자주 여행을 다녀요.',
+      keywords: ['회사원', '주말', '여행'],
+      tip: '「-이고」连接两个信息，句尾「다녀요」用自然降调。',
+    },
+    senior: {
+      prompt: '就「在线学习」发表观点',
+      reference: '저는 온라인 학습이 아주 편리하다고 생각합니다.',
+      keywords: ['온라인 학습', '편리하다', '생각합니다'],
+      tip: '「~다고 생각합니다」前稍作停顿，重读「편리하다」突出立场。',
+    },
+    advanced: {
+      prompt: '在正式场合发表感谢致辞',
+      reference: '오늘 바쁘신 중에 와 주셔서 진심으로 감사드립니다.',
+      keywords: ['바쁘신 중에', '와 주셔서', '감사드립니다'],
+      tip: '敬语致辞注意「바쁘신 중에」的节奏，语速放稳、字字清晰。',
+    },
+  },
+};
+
+const CONTENT = { en: EN, ja: JA, ko: KO };
+
+const COURSES = [];
+const LESSONS = [];
+
+LANGUAGES.filter((l) => !l.comingSoon).forEach((lang) => {
+  const bank = CONTENT[lang.id];
+  LEVELS.forEach((level) => {
+    const courseId = lang.id + '-' + level.id;
+    const words = bank.words[level.id];
+    const grammar = bank.grammar[level.id];
+    const listening = bank.listening[level.id];
+    const speaking = bank.speaking[level.id];
+
+    const fullContent = { words: words, grammar: grammar, listening: listening, speaking: speaking };
+    const lessonDefs = [
+      { type: 'vocab', title: level.name + ' · 核心词汇', subtitle: words.length + ' 个高频单词闪卡速记', content: fullContent },
+      { type: 'grammar', title: level.name + ' · 实用语法', subtitle: '「' + grammar.title + '」规则精讲与练习', content: fullContent },
+      { type: 'listening', title: level.name + ' · 听力训练', subtitle: '「' + listening.title + '」情景对话理解', content: fullContent },
+      { type: 'speaking', title: level.name + ' · 口语跟读', subtitle: '「' + speaking.prompt + '」跟读训练', content: fullContent },
+    ];
+
+    const lessonIds = [];
+    lessonDefs.forEach((def, i) => {
+      const id = courseId + '-l' + (i + 1);
+      lessonIds.push(id);
+      LESSONS.push({ id: id, courseId: courseId, languageId: lang.id, levelId: level.id, type: def.type, title: def.title, subtitle: def.subtitle, featured: true, content: def.content, order: i + 1 });
+    });
+
+    COURSES.push({
+      id: courseId,
+      languageId: lang.id,
+      levelId: level.id,
+      title: lang.name + ' · ' + level.name,
+      tagline: level.tag + '：' + level.desc,
+      lessons: lessonIds,
+      totalXp: 120,
+    });
+  });
+});
+
+const SEED_POSTS = [
+  {
+    id: 'p1', authorId: 'seed-1', authorName: '小鹿在冲浪', avatar: '🦌', time: '2小时前',
+    text: '🇬🇧 分享一个英语听力入门心得：不要追求每个词都听懂！先抓住"信号词"（but / because / actually），再补全画面感。坚持两周，泛听感觉会完全不同～',
+    likes: 42, comments: [
+      { id: 'c1', authorId: 'seed-2', authorName: '阿泽', avatar: '🧑‍💻', time: '1小时前', text: '信号词这个方法真的很管用，我练了一周就能听懂 VOA 慢速了！' },
+    ],
+  },
+  {
+    id: 'p2', authorId: 'seed-2', authorName: '阿泽', avatar: '🧑‍💻', time: '5小时前',
+    text: '背单词效率低？试试「间隔重复 + 语境记忆」：第一天学，第三天复习，第七天再用例句造句。语流平台的闪卡模式就带例句，复习时遮住释义自己先回忆，效果翻倍。',
+    likes: 28, comments: [],
+  },
+  {
+    id: 'p3', authorId: 'seed-3', authorName: '樱井のN1', avatar: '🌸', time: '昨天',
+    text: '📕 日语 N1 备考倒计时 90 天！每日计划：\n・早上：30分钟 N1 词汇 + 例句跟读\n・中午：1 篇真题听力精听\n・晚上：语法题 20 道 + 复盘错题\n想找一起打卡的伙伴，互相监督～',
+    likes: 56, comments: [
+      { id: 'c2', authorId: 'seed-4', authorName: '芋泥啵啵', avatar: '🍠', time: '昨天', text: '我可以！求组队，我目标是 12 月 N2。' },
+      { id: 'c3', authorId: 'seed-5', authorName: '北野', avatar: '🍵', time: '昨天', text: '听力精听用哪里的材料？求推荐。' },
+    ],
+  },
+  {
+    id: 'p4', authorId: 'seed-4', authorName: '芋泥啵啵', avatar: '🍠', time: '昨天',
+    text: '🇰🇷 韩语零基础三个月，能听懂爱豆综艺里的日常对话啦！秘诀就是「影子跟读」：跟着原声模仿语气和停顿，不要只看字幕。语流的口语跟读模块录完音自己回放对比，进步看得见。',
+    likes: 35, comments: [],
+  },
+  {
+    id: 'p5', authorId: 'seed-6', authorName: 'Mia要上岸', avatar: '🌊', time: '2天前',
+    text: '口语总是卡壳怎么办？我的方法是「10秒即兴」：随机抽一个话题，用英语说 10 秒不停。从「I think...」开始，逼自己输出。练到第 30 天，明显感觉大脑里的"语言开关"被打开了。',
+    likes: 61, comments: [
+      { id: 'c4', authorId: 'seed-1', authorName: '小鹿在冲浪', avatar: '🦌', time: '1天前', text: '这个方法我也在用，搭配平台的口语评分反馈更佳！' },
+    ],
+  },
+  {
+    id: 'p6', authorId: 'seed-5', authorName: '北野', avatar: '🍵', time: '3天前',
+    text: '🍵 日语敬语避坑：商务邮件里「ご連絡ください」vs「ご連絡いただけますか」，前者是命令式请求，后者更委婉礼貌。面试和客户沟通多用后者，好感度 +100。',
+    likes: 47, comments: [],
+  },
+  {
+    id: 'p7', authorId: 'seed-7', authorName: '简言', avatar: '📖', time: '3天前',
+    text: '文学翻译方向的同学：推荐「对照阅读法」——同一段落先读原文，再读名家译文，最后自己译一遍对比。重点看处理文化意象时的取舍。翻译是艺术，也是反复打磨的手艺。',
+    likes: 33, comments: [
+      { id: 'c5', authorId: 'seed-3', authorName: '樱井のN1', avatar: '🌸', time: '2天前', text: '受教了！收藏。' },
+    ],
+  },
+  {
+    id: 'p8', authorId: 'seed-8', authorName: 'Kim 小迷妹', avatar: '🎤', time: '4天前',
+    text: '🇰🇷 有没有人一起刷韩语语法？「-아지다」被动用法总是记混……求推荐好记的口诀！',
+    likes: 12, comments: [
+      { id: 'c6', authorId: 'seed-2', authorName: '阿泽', avatar: '🧑‍💻', time: '3天前', text: '记成「被 x 得 xxx」：문이 닫혀 있어요 = 门被关着。多造句就顺了。' },
+    ],
+  },
+];
+
+const BADGES = [
+  { id: 'first-lesson', name: '初次启程', icon: '🚀', desc: '完成第 1 个课时', check: function (s) { return s.lessons >= 1; } },
+  { id: 'streak-3', name: '持之以恒', icon: '🔥', desc: '连续学习 3 天', check: function (s) { return s.streak >= 3; } },
+  { id: 'words-50', name: '词汇达人', icon: '📦', desc: '累计学习 50 个单词', check: function (s) { return s.words >= 50; } },
+  { id: 'grammar-10', name: '语法大师', icon: '🧩', desc: '完成 10 次语法练习', check: function (s) { return s.grammar >= 10; } },
+  { id: 'listening-5', name: '听力之星', icon: '🎧', desc: '完成 5 次听力训练', check: function (s) { return s.listening >= 5; } },
+  { id: 'speaking-5', name: '口语先锋', icon: '🎙️', desc: '完成 5 次口语跟读', check: function (s) { return s.speaking >= 5; } },
+  { id: 'xp-1000', name: '学海无涯', icon: '🏔️', desc: '累计获得 1000 XP', check: function (s) { return s.xp >= 1000; } },
+  { id: 'lessons-10', name: '学霸之路', icon: '📚', desc: '完成 10 个课时', check: function (s) { return s.lessons >= 10; } },
+  { id: 'post-1', name: '社群之星', icon: '💬', desc: '在社区发布第 1 条内容', check: function (s) { return s.posts >= 1; } },
+];
+
+const getLang = function (id) { return LANGUAGES.find(function (l) { return l.id === id; }); };
+const getLevel = function (id) { return LEVELS.find(function (l) { return l.id === id; }); };
+const getPersona = function (id) { return PERSONAS.find(function (p) { return p.id === id; }); };
+const getCourse = function (id) { return COURSES.find(function (c) { return c.id === id; }); };
+const getLesson = function (id) { return LESSONS.find(function (l) { return l.id === id; }); };
+const getLessonsOfCourse = function (courseId) { return LESSONS.filter(function (l) { return l.courseId === courseId; }).sort(function (a, b) { return a.order - b.order; }); };
+const getModule = function (id) { return MODULES.find(function (m) { return m.id === id; }); };
+const getCourseProgressPct = function (courseId, completed) {
+  const lessons = getLessonsOfCourse(courseId);
+  if (!lessons.length) return 0;
+  const done = lessons.filter(function (l) { return completed.indexOf(l.id) >= 0; }).length;
+  return Math.round((done / lessons.length) * 100);
+};
+const getLevelNameByXp = function (xp) {
+  let current = LEVELS[0];
+  for (let i = 0; i < LEVELS.length; i++) if (xp >= LEVELS[i].xp) current = LEVELS[i];
+  return current;
+};
+
+const PERSONA_LEVEL_BIAS = {
+  abroad: ['senior', 'advanced', 'junior'],
+  career: ['junior', 'senior', 'advanced'],
+  translation: ['senior', 'advanced', 'junior'],
+  travel: ['starter', 'elementary', 'junior'],
+  exam: ['junior', 'senior', 'elementary'],
+  interest: ['starter', 'elementary', 'junior'],
+};
+
+const recommendCourses = function (user) {
+  if (!user) return [];
+  const bias = PERSONA_LEVEL_BIAS[user.personaId] || ['starter', 'elementary', 'junior'];
+  const startIdx = bias.indexOf(user.levelId) === -1 ? 0 : bias.indexOf(user.levelId);
+  const ordered = bias.slice(startIdx).concat(bias.slice(0, startIdx));
+  const langCourses = COURSES.filter(function (c) { return c.languageId === user.langId; });
+  const byLevel = function (id) { return langCourses.find(function (c) { return c.levelId === id; }); };
+  const list = [];
+  for (let i = 0; i < ordered.length; i++) {
+    const item = byLevel(ordered[i]);
+    if (item) list.push(item);
+  }
+  return list;
+};
+
+const PERSONA_MOTTO = {
+  abroad: '为你的留学之路，铺好语言的阶梯',
+  career: '让每一次商务沟通，都从容自信',
+  translation: '在两种语言之间，找到最动人的落点',
+  travel: '背上行囊之前，先学会一句"你好"',
+  exam: '科学备考，让每一分努力都算数',
+  interest: '从热爱开始，让学习变成享受',
+};
+
+const defaultProgress = function () {
+  return {
+    completed: [], xp: 0, streak: 0, lastStudyDate: null,
+    stats: { words: 0, grammar: 0, listening: 0, speaking: 0, lessons: 0, posts: 0 },
+    badges: [],
+    week: { mon: 0, tue: 0, wed: 0, thu: 0, fri: 0, sat: 0, sun: 0 },
+    likedPosts: [], studyMins: 0,
+  };
+};
+</script>
+<script type="text/babel" data-presets="react">
+/* ===== 模拟后端（localStorage 持久化）===== */
+const DB_KEY = 'linguaflow_db_v4';
+
+const loadDB = function () {
+  try {
+    const raw = localStorage.getItem(DB_KEY);
+    if (raw) {
+      const db = JSON.parse(raw);
+      if (db && db.users && db.posts) return db;
+    }
+  } catch (e) {}
+  const db = {
+    users: [],
+    posts: JSON.parse(JSON.stringify(SEED_POSTS)).map(function (p) {
+      return { ...p, baseLikes: p.likes || 0, likedBy: [], comments: (p.comments || []).map(function (c) { return { ...c, likedBy: [] }; }) };
+    }),
+    nextId: 1,
+  };
+  saveDB(db);
+  return db;
+};
+
+const saveDB = function (db) {
+  try { localStorage.setItem(DB_KEY, JSON.stringify(db)); } catch (e) {}
+};
+
+const uid = function () {
+  return 'u' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+};
+
+const refreshBadges = function (progress) {
+  const ctx = { ...progress.stats, xp: progress.xp, streak: progress.streak };
+  const earned = BADGES.filter(function (b) { return b.check(ctx); }).map(function (b) { return b.id; });
+  progress.badges = Array.from(new Set(progress.badges.concat(earned)));
+  return progress;
+};
+
+const applyStreak = function (progress) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayStr = today.toDateString();
+  const last = progress.lastStudyDate ? new Date(progress.lastStudyDate) : null;
+  if (last) last.setHours(0, 0, 0, 0);
+  if (progress.lastStudyDate !== todayStr) {
+    if (last && today - last === 86400000) progress.streak += 1;
+    else progress.streak = 1;
+    progress.lastStudyDate = todayStr;
+  }
+  return progress;
+};
+
+const updateWeek = function (progress) {
+  const wd = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'][new Date().getDay()];
+  progress.week[wd] = (progress.week[wd] || 0) + 1;
+};
+
+/* ===== 语音朗读 ===== */
+const speak = function (text, lang, rate) {
+  if (!('speechSynthesis' in window)) return false;
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang || 'en-US';
+    u.rate = rate || 1;
+    const voices = window.speechSynthesis.getVoices();
+    if (voices.length) {
+      const prefix = (lang || 'en-US').split('-')[0].toLowerCase();
+      const v = voices.find(function (x) { return x.lang.replace('_', '-').toLowerCase().startsWith(prefix); });
+      if (v) u.voice = v;
+    }
+    window.speechSynthesis.speak(u);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+const stopSpeak = function () {
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+};
+
+/* ===== 全局状态 ===== */
+const AppCtx = createContext(null);
+const SESSION_KEY = 'linguaflow_session';
+
+const AppProvider = function ({ children }) {
+  const [db, setDb] = useState(loadDB);
+  const [currentUserId, setCurrentUserId] = useState(function () { return localStorage.getItem(SESSION_KEY); });
+  const [toasts, setToasts] = useState([]);
+
+  const persist = function (next) {
+    setDb(next);
+    saveDB(next);
+  };
+
+  const showToast = useCallback(function (msg, type) {
+    const id = Date.now() + Math.random();
+    setToasts(function (t) { return t.concat([{ id: id, msg: msg, type: type || 'info' }]); });
+    setTimeout(function () { setToasts(function (t) { return t.filter(function (x) { return x.id !== id; }); }); }, 2800);
+  }, []);
+
+  const currentUser = db.users.find(function (u) { return u.id === currentUserId; }) || null;
+
+  const register = function ({ name, email, password }) {
+    if (db.users.some(function (u) { return u.email.toLowerCase() === email.toLowerCase(); })) {
+      throw new Error('该邮箱已注册，请直接登录');
+    }
+    const user = {
+      id: uid(),
+      name: name,
+      email: email,
+      password: password,
+      avatar: (name.trim().slice(0, 1).toUpperCase()) || '语',
+      langId: 'en',
+      levelId: 'starter',
+      personaId: 'interest',
+      joinedAt: Date.now(),
+      progress: defaultProgress(),
+    };
+    persist({ ...db, users: db.users.concat([user]) });
+    setCurrentUserId(user.id);
+    localStorage.setItem(SESSION_KEY, user.id);
+    return user;
+  };
+
+  const login = function ({ email, password }) {
+    const u = db.users.find(function (x) { return x.email.toLowerCase() === email.toLowerCase(); });
+    if (!u || u.password !== password) {
+      throw new Error('邮箱或密码不正确，请重试');
+    }
+    setCurrentUserId(u.id);
+    localStorage.setItem(SESSION_KEY, u.id);
+    return u;
+  };
+
+  const logout = function () {
+    setCurrentUserId(null);
+    localStorage.removeItem(SESSION_KEY);
+  };
+
+  const updateProfile = function (patch) {
+    if (!currentUser) return;
+    persist({ ...db, users: db.users.map(function (u) { return u.id === currentUser.id ? { ...u, ...patch } : u; }) });
+  };
+
+  const recordActivity = function ({ lessonId, completeLesson, xp, words, grammar, listening, speaking, minutes }) {
+    if (!currentUser) return [];
+    const prev = currentUser.progress;
+    const p = {
+      ...prev,
+      completed: prev.completed.slice(),
+      stats: { ...prev.stats },
+      week: { ...prev.week },
+      badges: prev.badges.slice(),
+    };
+    p.xp += xp || 0;
+    p.studyMins += minutes || 1;
+    p.stats.words += words || 0;
+    p.stats.grammar += grammar || 0;
+    p.stats.listening += listening || 0;
+    p.stats.speaking += speaking || 0;
+    if (completeLesson && lessonId && p.completed.indexOf(lessonId) < 0) {
+      p.completed.push(lessonId);
+      p.stats.lessons += 1;
+    }
+    applyStreak(p);
+    updateWeek(p);
+    refreshBadges(p);
+    const newBadges = p.badges.filter(function (b) { return prev.badges.indexOf(b) < 0; });
+    const updated = { ...currentUser, progress: p };
+    persist({ ...db, users: db.users.map(function (u) { return u.id === currentUser.id ? updated : u; }) });
+    return newBadges;
+  };
+
+  const toggleLike = function (postId) {
+    if (!currentUser) return;
+    const posts = db.posts.map(function (p) {
+      if (p.id !== postId) return p;
+      const has = p.likedBy.indexOf(currentUser.id) >= 0;
+      return { ...p, likedBy: has ? p.likedBy.filter(function (x) { return x !== currentUser.id; }) : p.likedBy.concat([currentUser.id]) };
+    });
+    persist({ ...db, posts: posts });
+  };
+
+  const addPost = function (text) {
+    if (!currentUser) return;
+    const post = {
+      id: uid(),
+      authorId: currentUser.id,
+      authorName: currentUser.name,
+      avatar: currentUser.avatar,
+      time: '刚刚',
+      text: text,
+      baseLikes: 0,
+      likedBy: [],
+      comments: [],
+    };
+    const prev = currentUser.progress;
+    const p = { ...prev, stats: { ...prev.stats, posts: prev.stats.posts + 1 }, badges: prev.badges.slice() };
+    refreshBadges(p);
+    persist({ ...db, posts: [post].concat(db.posts), users: db.users.map(function (u) { return u.id === currentUser.id ? { ...u, progress: p } : u; }) });
+    const newBadges = p.badges.filter(function (b) { return prev.badges.indexOf(b) < 0; });
+    return newBadges;
+  };
+
+  const addComment = function (postId, text) {
+    if (!currentUser || !text.trim()) return;
+    const comment = {
+      id: uid(),
+      authorId: currentUser.id,
+      authorName: currentUser.name,
+      avatar: currentUser.avatar,
+      time: '刚刚',
+      text: text.trim(),
+    };
+    persist({ ...db, posts: db.posts.map(function (p) { return p.id === postId ? { ...p, comments: p.comments.concat([comment]) } : p; }) });
+  };
+
+  return React.createElement(
+    AppCtx.Provider,
+    { value: { db: db, currentUser: currentUser, toasts: toasts, showToast: showToast, register: register, login: login, logout: logout, updateProfile: updateProfile, recordActivity: recordActivity, toggleLike: toggleLike, addPost: addPost, addComment: addComment } },
+    children
+  );
+};
+
+const useApp = function () { return useContext(AppCtx); };
+</script>
+<script type="text/babel" data-presets="react">
+/* ===== 通用组件 ===== */
+const SectionHead = function ({ title, sub, extra }) {
+  return React.createElement('div', { className: 'sec-head' },
+    React.createElement('div', null, React.createElement('h2', null, title), sub ? React.createElement('div', { className: 'sub' }, sub) : null),
+    extra
+  );
+};
+
+const ProgressBar = function ({ pct, color }) {
+  return React.createElement('div', { className: 'progress' },
+    React.createElement('i', { style: { width: Math.min(100, Math.max(0, pct)) + '%', background: color || undefined } })
+  );
+};
+
+const StatCard = function ({ icon, value, label, color }) {
+  return React.createElement('div', { className: 'stat-card' },
+    React.createElement('div', { className: 's-icon', style: { background: (color || '#eef2ff') + '26', color: color || '#4f46e5' } }, icon),
+    React.createElement('div', null, React.createElement('b', null, value), React.createElement('span', null, label))
+  );
+};
+
+const Modal = function ({ open, onClose, children, wide }) {
+  if (!open) return null;
+  return React.createElement('div', { className: 'modal-mask', onClick: onClose },
+    React.createElement('div', { className: 'modal', style: { maxWidth: wide ? 760 : 560 }, onClick: function (e) { e.stopPropagation(); } },
+      React.createElement('button', { className: 'btn btn-ghost btn-sm', style: { position: 'absolute', right: 18, top: 18, padding: '5px 10px', borderRadius: 10 }, onClick: onClose }, '✕'),
+      children
+    )
+  );
+};
+
+const Confetti = function () {
+  const pieces = useMemo(function () {
+    return Array.from({ length: 60 }, function (_, i) {
+      return {
+        left: Math.random() * 100,
+        delay: Math.random() * 0.5,
+        dur: 2.2 + Math.random() * 1.6,
+        color: ['#4f46e5', '#7c3aed', '#06b6d4', '#ec4899', '#f59e0b', '#22c55e'][i % 6],
+        rot: Math.random() * 360,
+      };
+    });
+  }, []);
+  return React.createElement('div', { className: 'confetti-wrap' },
+    pieces.map(function (p, i) {
+      return React.createElement('span', { key: i, className: 'confetti', style: { left: p.left + '%', background: p.color, animationDuration: p.dur + 's', animationDelay: p.delay + 's', transform: 'rotate(' + p.rot + 'deg)' } });
+    })
+  );
+};
+
+const EmptyState = function ({ icon, title, sub }) {
+  return React.createElement('div', { className: 'empty' },
+    React.createElement('div', { className: 'e-icon' }, icon),
+    React.createElement('b', { style: { fontSize: 16 } }, title),
+    React.createElement('p', { style: { marginTop: 6, fontSize: 13.5 } }, sub)
+  );
+};
+
+/* ===== 布局 ===== */
+const Layout = function () {
+  return React.createElement(React.Fragment, null,
+    React.createElement(Navbar, null),
+    React.createElement('div', { className: 'page' }, React.createElement(Outlet, null)),
+    React.createElement(Footer, null)
+  );
+};
+
+/* ===== 导航栏 ===== */
+const Navbar = function () {
+  const app = useApp();
+  const currentUser = app.currentUser;
+  const logout = app.logout;
+  const navigate = useNavigate();
+  const level = currentUser ? getLevelNameByXp(currentUser.progress.xp) : null;
+
+  const handleLogout = function () {
+    logout();
+    navigate('/');
+  };
+
+  return React.createElement('header', { className: 'navbar' },
+    React.createElement('div', { className: 'container navbar-inner' },
+      React.createElement(Link, { to: '/', className: 'nav-logo' },
+        React.createElement('span', { className: 'logo-mark' }, '🌊'),
+        '语流',
+        React.createElement('span', { className: 'grad-text' }, 'LinguaFlow')
+      ),
+      React.createElement('nav', { className: 'nav-links' },
+        React.createElement(NavLink, { to: '/courses', className: function () { return 'nav-link'; } }, '课程体系'),
+        React.createElement(NavLink, { to: '/dashboard', className: function () { return 'nav-link'; } }, '学习中心'),
+        React.createElement(NavLink, { to: '/community', className: function () { return 'nav-link'; } }, '社区交流'),
+        React.createElement(NavLink, { to: '/profile', className: function () { return 'nav-link'; } }, '我的成就')
+      ),
+      currentUser
+        ? React.createElement('div', { className: 'nav-user' },
+            level ? React.createElement('span', { className: 'pill pill-brand' }, level.icon + ' ' + level.name) : null,
+            React.createElement(Link, { to: '/profile', className: 'avatar', title: currentUser.name }, currentUser.avatar),
+            React.createElement('button', { className: 'btn btn-ghost btn-sm', onClick: handleLogout }, '退出')
+          )
+        : React.createElement('div', { className: 'nav-user' },
+            React.createElement(Link, { to: '/login', className: 'btn btn-ghost btn-sm' }, '登录'),
+            React.createElement(Link, { to: '/register', className: 'btn btn-primary btn-sm' }, '免费注册')
+          )
+    )
+  );
+};
+
+/* ===== 页脚 ===== */
+const Footer = function () {
+  return React.createElement('footer', { className: 'footer' },
+    React.createElement('div', { className: 'container' },
+      React.createElement('div', { className: 'footer-grid' },
+        React.createElement('div', null,
+          React.createElement(Link, { to: '/', className: 'nav-logo', style: { marginBottom: 12, display: 'inline-flex' } },
+            React.createElement('span', { className: 'logo-mark' }, '🌊'),
+            '语流 ',
+            React.createElement('span', { className: 'grad-text' }, 'LinguaFlow')
+          ),
+          React.createElement('p', { className: 'muted', style: { fontSize: 13.5, marginTop: 10, maxWidth: 300 } },
+            '面向不同语言能力与学习目标的学习者，提供沉浸式、个性化、可追踪的多语种学习体验。'
+          )
+        ),
+        React.createElement('div', null,
+          React.createElement('h4', null, '学习'),
+          React.createElement(Link, { className: 'link', to: '/courses' }, '课程体系'),
+          React.createElement(Link, { className: 'link', to: '/dashboard' }, '学习中心'),
+          React.createElement(Link, { className: 'link', to: '/profile' }, '成就徽章')
+        ),
+        React.createElement('div', null,
+          React.createElement('h4', null, '语言'),
+          LANGUAGES.filter(function (l) { return !l.comingSoon; }).map(function (l) {
+            return React.createElement(Link, { key: l.id, className: 'link', to: '/courses?lang=' + l.id }, l.flag + ' ' + l.name + ' · ' + l.native);
+          })
+        ),
+        React.createElement('div', null,
+          React.createElement('h4', null, '社区'),
+          React.createElement(Link, { className: 'link', to: '/community' }, '交流广场'),
+          React.createElement(Link, { className: 'link', to: '/register' }, '加入我们'),
+          React.createElement('span', { className: 'link', style: { cursor: 'default' } }, '帮助中心（筹备中）')
+        )
+      ),
+      React.createElement('div', { className: 'footer-bottom' }, '© 2026 语流 LinguaFlow · 让每一种热爱，都有处发声。本站为演示项目，数据均为本地模拟。')
+    )
+  );
+};
+</script>
+<script type="text/babel" data-presets="react">
+/* ===== 单词记忆 ===== */
+const VocabularyPlayer = function ({ words, lang, onFinish }) {
+  const [mode, setMode] = useState('study');
+  const [idx, setIdx] = useState(0);
+  const [flipped, setFlipped] = useState(false);
+  const [quiz, setQuiz] = useState([]);
+  const [qi, setQi] = useState(0);
+  const [score, setScore] = useState(0);
+  const [picked, setPicked] = useState(null);
+  const finishedRef = useRef(false);
+
+  const word = (words && words.length) ? words[Math.min(idx, words.length - 1)] : null;
+
+  if (!word) {
+    return (
+      <div className="empty">
+        <div className="e-icon">🃏</div>
+        <b>本节暂未收录单词</b>
+        <p style={{ marginTop: 6, fontSize: 13.5 }}>可在本课的「主推模块」中完成核心练习</p>
+      </div>
+    );
+  }
+
+  const startQuiz = function () {
+    const qs = words.map(function (w, i) {
+      const distractors = words.filter(function (_, j) { return j !== i; }).map(function (x) { return x.meaning; });
+      while (distractors.length < 3) distractors.push(['美好', '简单', '世界'][distractors.length % 3]);
+      const shuffled = distractors.sort(function () { return Math.random() - 0.5; }).slice(0, 3);
+      const opts = shuffled.concat([w.meaning]).sort(function () { return Math.random() - 0.5; });
+      return { word: w, opts: opts, ans: opts.indexOf(w.meaning) };
+    });
+    setQuiz(qs); setQi(0); setScore(0); setPicked(null); setMode('quiz');
+  };
+
+  const pick = function (i) {
+    if (picked !== null) return;
+    setPicked(i);
+    if (i === quiz[qi].ans) setScore(function (s) { return s + 1; });
+  };
+
+  const nextQ = function () {
+    if (qi + 1 >= quiz.length) {
+      if (!finishedRef.current) { finishedRef.current = true; if (onFinish) onFinish(); }
+      setMode('result');
+    } else { setQi(qi + 1); setPicked(null); }
+  };
+
+  const restart = function () {
+    finishedRef.current = false; setIdx(0); setFlipped(false); setMode('study');
+  };
+
+  if (mode === 'study') {
+    return (
+      <div>
+        <div className={'flashcard' + (flipped ? ' flipped' : '')} style={{ marginBottom: 20 }}>
+          <div className="flashcard-inner">
+            <div className="flashcard-face" onClick={() => setFlipped(!flipped)}>
+              <span className="fc-hint">点击翻面</span>
+              <div className="fc-word">{word.text}</div>
+              <div className="fc-phon">{word.phonetic}</div>
+              <span className="pill pill-brand" style={{ position: 'absolute', bottom: 14 }}>第 {idx + 1} / {words.length} 张</span>
+            </div>
+            <div className="flashcard-face back" onClick={() => setFlipped(!flipped)}>
+              <div className="fc-word" style={{ fontSize: 26 }}>{word.meaning}</div>
+              <div className="ink2" style={{ fontSize: 14, maxWidth: 300, textAlign: 'center' }}>
+                {word.example}<br /><span className="muted">{word.exampleCn}</span>
+              </div>
+              <button className="btn btn-ghost btn-sm" onClick={(e) => { e.stopPropagation(); speak(word.text, lang); }}>🔊 发音</button>
+            </div>
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
+          <button className="btn btn-ghost" disabled={idx === 0} onClick={() => { setIdx(idx - 1); setFlipped(false); }}>上一张</button>
+          {idx < words.length - 1
+            ? <button className="btn btn-primary" onClick={() => { setIdx(idx + 1); setFlipped(false); }}>下一张 →</button>
+            : <button className="btn btn-primary" onClick={startQuiz}>开始测验 🎯</button>}
+        </div>
+      </div>
+    );
+  }
+
+  if (mode === 'quiz' && quiz.length > 0) {
+    return (
+      <div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+          <span className="pill pill-brand">测验 {qi + 1} / {quiz.length}</span>
+          <span className="muted" style={{ fontSize: 13 }}>答对 {score} 题</span>
+        </div>
+        <div style={{ textAlign: 'center', marginBottom: 18 }}>
+          <div style={{ fontSize: 26, fontWeight: 800 }}>{quiz[qi].word.text}</div>
+          <div className="muted" style={{ fontSize: 13 }}>{quiz[qi].word.phonetic}</div>
+          <button className="btn btn-soft btn-sm" style={{ marginTop: 8 }} onClick={() => speak(quiz[qi].word.text, lang)}>🔊 听发音</button>
+        </div>
+        <div style={{ display: 'grid', gap: 10 }}>
+          {quiz[qi].opts.map((o, i) => {
+            let cls = 'opt';
+            if (picked !== null) {
+              if (i === quiz[qi].ans) cls += ' correct';
+              else if (i === picked) cls += ' wrong';
+            }
+            return (
+              <button key={i} className={cls} disabled={picked !== null} onClick={() => pick(i)}>
+                <span className="opt-key">{'ABCD'[i]}</span>{o}
+                {picked !== null && i === quiz[qi].ans && <span style={{ marginLeft: 'auto' }}>✅</span>}
+              </button>
+            );
+          })}
+        </div>
+        {picked !== null && (
+          <div>
+            <div className={'feedback ' + (picked === quiz[qi].ans ? 'ok' : 'bad')}>
+              {picked === quiz[qi].ans ? '🎉 回答正确！' : '正确答案：' + quiz[qi].opts[quiz[qi].ans]}
+              <span className="muted" style={{ display: 'block', marginTop: 4 }}>{quiz[qi].word.example} · {quiz[qi].word.exampleCn}</span>
+            </div>
+            <div style={{ marginTop: 14, textAlign: 'center' }}>
+              <button className="btn btn-primary" onClick={nextQ}>{qi + 1 >= quiz.length ? '查看结果' : '下一题 →'}</button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="center" style={{ padding: '30px 0' }}>
+      <div style={{ fontSize: 52 }} className="bounce-in">{score === quiz.length ? '🏆' : score >= quiz.length / 2 ? '🌟' : '💪'}</div>
+      <h3 style={{ margin: '14px 0 6px' }}>测验完成</h3>
+      <p className="ink2">答对 <b className="grad-text" style={{ fontSize: 22 }}>{score}</b> / {quiz.length} 题</p>
+      <p className="muted" style={{ fontSize: 13, marginTop: 6 }}>
+        {score === quiz.length ? '全部正确，太棒了！记得明天复习巩固哦。' : score >= quiz.length / 2 ? '掌握得不错，再刷一轮会更牢固！' : '别灰心，回到闪卡再学一遍吧！'}
+      </p>
+      <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 18 }}>
+        <button className="btn btn-ghost" onClick={restart}>↺ 再学一轮</button>
+        <button className="btn btn-primary" onClick={() => { finishedRef.current = true; if (onFinish) onFinish(); }}>确认完成 ✓</button>
+      </div>
+    </div>
+  );
+};
+
+/* ===== 语法练习 ===== */
+const GrammarPlayer = function ({ content, lang, onFinish }) {
+  const [phase, setPhase] = useState('learn');
+  const [qIndex, setQIndex] = useState(0);
+  const [picked, setPicked] = useState(null);
+  const [correctCount, setCorrectCount] = useState(0);
+  const finishedRef = useRef(false);
+
+  if (!content || !content.quiz || !content.quiz.length) {
+    return (
+      <div className="empty">
+        <div className="e-icon">✍️</div>
+        <b>本节暂无语法练习</b>
+        <p style={{ marginTop: 6, fontSize: 13.5 }}>可在本课的「主推模块」中完成核心练习</p>
+      </div>
+    );
+  }
+
+  const q = content.quiz[qIndex];
+
+  const pick = function (i) {
+    if (picked !== null) return;
+    setPicked(i);
+    if (i === q.ans) setCorrectCount(function (c) { return c + 1; });
+  };
+
+  const nextQ = function () {
+    if (qIndex + 1 >= content.quiz.length) {
+      if (!finishedRef.current) { finishedRef.current = true; if (onFinish) onFinish(); }
+      setPhase('result');
+    } else { setQIndex(qIndex + 1); setPicked(null); }
+  };
+
+  const restart = function () {
+    finishedRef.current = false; setQIndex(0); setPicked(null); setCorrectCount(0); setPhase('learn');
+  };
+
+  if (phase === 'learn') {
+    return (
+      <div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+          <span className="pill pill-brand">语法点</span>
+          <h3 style={{ fontSize: 20 }}>{content.title}</h3>
+        </div>
+        <p className="ink2" style={{ fontSize: 15 }}>{content.intro}</p>
+        <div style={{ margin: '16px 0', padding: '14px 18px', borderRadius: 14, background: 'var(--brand-soft)', fontFamily: 'var(--mono)', fontSize: 14.5, fontWeight: 700, color: 'var(--brand)' }}>
+          {content.pattern}
+        </div>
+        <div style={{ display: 'grid', gap: 10, marginBottom: 20 }}>
+          {content.examples.map((e, i) => (
+            <div key={i} style={{ padding: '12px 16px', borderRadius: 12, border: '1px solid var(--line)', background: 'var(--bg)' }}>
+              <div style={{ fontWeight: 700 }}>{e.src}</div>
+              <div className="muted" style={{ fontSize: 13 }}>{e.cn}</div>
+            </div>
+          ))}
+        </div>
+        <button className="btn btn-primary" onClick={() => setPhase('quiz')}>开始练习 ✍️</button>
+      </div>
+    );
+  }
+
+  if (phase === 'quiz' && q) {
+    return (
+      <div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+          <span className="pill pill-brand">练习 {qIndex + 1} / {content.quiz.length}</span>
+          <span className="muted" style={{ fontSize: 13 }}>答对 {correctCount} 题</span>
+        </div>
+        <p style={{ fontSize: 17, fontWeight: 700, marginBottom: 16 }}>{q.q}</p>
+        <div style={{ display: 'grid', gap: 10 }}>
+          {q.opts.map((o, i) => {
+            let cls = 'opt';
+            if (picked !== null) {
+              if (i === q.ans) cls += ' correct';
+              else if (i === picked) cls += ' wrong';
+            }
+            return (
+              <button key={i} className={cls} disabled={picked !== null} onClick={() => pick(i)}>
+                <span className="opt-key">{'ABCD'[i]}</span>{o}
+              </button>
+            );
+          })}
+        </div>
+        {picked !== null && (
+          <div>
+            <div className={'feedback ' + (picked === q.ans ? 'ok' : 'bad')}>
+              {picked === q.ans ? '🎉 正确！' : '💡 再想想，正确答案见下。'}
+              <span style={{ display: 'block', marginTop: 4 }}>{q.why}</span>
+            </div>
+            <div style={{ marginTop: 14, textAlign: 'center' }}>
+              <button className="btn btn-primary" onClick={nextQ}>{qIndex + 1 >= content.quiz.length ? '查看结果' : '下一题 →'}</button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="center" style={{ padding: '30px 0' }}>
+      <div style={{ fontSize: 52 }} className="bounce-in">{correctCount === content.quiz.length ? '🎉' : '📖'}</div>
+      <h3 style={{ margin: '14px 0 6px' }}>练习完成</h3>
+      <p className="ink2">答对 <b className="grad-text" style={{ fontSize: 22 }}>{correctCount}</b> / {content.quiz.length} 题</p>
+      <p className="muted" style={{ fontSize: 13, marginTop: 6 }}>
+        {correctCount === content.quiz.length ? '语法点已拿下，记得在真实语境中多用多练！' : '规则已掌握大半，重练一次把易错点吃透。'}
+      </p>
+      <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 18 }}>
+        <button className="btn btn-ghost" onClick={restart}>↺ 重新练习</button>
+        <button className="btn btn-primary" onClick={() => { finishedRef.current = true; if (onFinish) onFinish(); }}>确认完成 ✓</button>
+      </div>
+    </div>
+  );
+};
+
+/* ===== 听力训练 ===== */
+const ListeningPlayer = function ({ content, lang, onFinish }) {
+  const [showScript, setShowScript] = useState(false);
+  const [rate, setRate] = useState(1);
+  const [qIndex, setQIndex] = useState(0);
+  const [picked, setPicked] = useState(null);
+  const [correctCount, setCorrectCount] = useState(0);
+  const [phase, setPhase] = useState('listen');
+  const finishedRef = useRef(false);
+
+  if (!content || !content.script || !content.questions || !content.questions.length) {
+    return (
+      <div className="empty">
+        <div className="e-icon">🎧</div>
+        <b>本节暂无听力训练</b>
+        <p style={{ marginTop: 6, fontSize: 13.5 }}>可在本课的「主推模块」中完成核心练习</p>
+      </div>
+    );
+  }
+
+  const q = content.questions[qIndex];
+
+  const play = function (r) { setRate(r); speak(content.script, lang, r); };
+
+  const pick = function (i) {
+    if (picked !== null) return;
+    setPicked(i);
+    if (i === q.ans) setCorrectCount(function (c) { return c + 1; });
+  };
+
+  const nextQ = function () {
+    if (qIndex + 1 >= content.questions.length) {
+      if (!finishedRef.current) { finishedRef.current = true; if (onFinish) onFinish(); }
+      setPhase('result');
+    } else { setQIndex(qIndex + 1); setPicked(null); }
+  };
+
+  const restart = function () {
+    finishedRef.current = false; setQIndex(0); setPicked(null); setCorrectCount(0); setShowScript(false); setPhase('listen');
+  };
+
+  if (phase === 'listen') {
+    return (
+      <div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+          <span className="pill pill-brand">🎧 听力材料</span>
+          <h3 style={{ fontSize: 19 }}>{content.title}</h3>
+        </div>
+        <div className="card" style={{ padding: '26px', textAlign: 'center', marginBottom: 16 }}>
+          <div style={{ fontSize: 40, marginBottom: 8 }}>🎧</div>
+          <p className="ink2" style={{ fontSize: 14, marginBottom: 16 }}>播放对话，尽量先不看文本完成理解</p>
+          <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button className="btn btn-primary" onClick={() => play(1)}>▶ 播放常速</button>
+            <button className="btn btn-ghost" onClick={() => play(0.75)}>🐢 慢速播放</button>
+            <button className="btn btn-ghost" onClick={stopSpeak}>⏹ 停止</button>
+          </div>
+          <div style={{ marginTop: 12 }}>
+            <button className="btn btn-soft btn-sm" onClick={() => setShowScript(!showScript)}>{showScript ? '收起原文' : '查看原文'}</button>
+          </div>
+          {showScript && (
+            <div className="card" style={{ marginTop: 14, padding: 16, textAlign: 'left', background: 'var(--bg)' }}>
+              <div style={{ whiteSpace: 'pre-line', fontSize: 14, fontWeight: 600 }}>{content.script}</div>
+              <div className="muted" style={{ fontSize: 13, marginTop: 10, whiteSpace: 'pre-line' }}>{content.cn}</div>
+            </div>
+          )}
+        </div>
+        <button className="btn btn-primary" style={{ margin: '0 auto', display: 'flex' }} onClick={() => setPhase('quiz')}>听完了，开始答题 🎯</button>
+      </div>
+    );
+  }
+
+  if (phase === 'quiz' && q) {
+    return (
+      <div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+          <span className="pill pill-brand">理解检测 {qIndex + 1} / {content.questions.length}</span>
+          <span className="muted" style={{ fontSize: 13 }}>答对 {correctCount} 题</span>
+        </div>
+        <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
+          <button className="btn btn-soft btn-sm" onClick={() => play(1)}>🔊 再听一遍</button>
+          <button className="btn btn-soft btn-sm" onClick={() => setShowScript(!showScript)}>{showScript ? '隐藏原文' : '偷看原文'}</button>
+        </div>
+        {showScript && (
+          <div className="card" style={{ marginBottom: 14, padding: 14, background: 'var(--bg)' }}>
+            <div style={{ whiteSpace: 'pre-line', fontSize: 13.5, fontWeight: 600 }}>{content.script}</div>
+          </div>
+        )}
+        <p style={{ fontSize: 16.5, fontWeight: 700, marginBottom: 14 }}>{q.q}</p>
+        <div style={{ display: 'grid', gap: 10 }}>
+          {q.opts.map((o, i) => {
+            let cls = 'opt';
+            if (picked !== null) {
+              if (i === q.ans) cls += ' correct';
+              else if (i === picked) cls += ' wrong';
+            }
+            return (
+              <button key={i} className={cls} disabled={picked !== null} onClick={() => pick(i)}>
+                <span className="opt-key">{'ABCD'[i]}</span>{o}
+              </button>
+            );
+          })}
+        </div>
+        {picked !== null && (
+          <div>
+            <div className={'feedback ' + (picked === q.ans ? 'ok' : 'bad')}>
+              {picked === q.ans ? '🎉 听得很准！' : '💡 正确答案：' + q.opts[q.ans]}
+              <span style={{ display: 'block', marginTop: 4 }}>{q.why}</span>
+            </div>
+            <div style={{ marginTop: 14, textAlign: 'center' }}>
+              <button className="btn btn-primary" onClick={nextQ}>{qIndex + 1 >= content.questions.length ? '查看结果' : '下一题 →'}</button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="center" style={{ padding: '30px 0' }}>
+      <div style={{ fontSize: 52 }} className="bounce-in">{correctCount === content.questions.length ? '👂' : '🎧'}</div>
+      <h3 style={{ margin: '14px 0 6px' }}>听力训练完成</h3>
+      <p className="ink2">答对 <b className="grad-text" style={{ fontSize: 22 }}>{correctCount}</b> / {content.questions.length} 题</p>
+      <p className="muted" style={{ fontSize: 13, marginTop: 6 }}>
+        {correctCount === content.questions.length ? '听力满分！试试不看原文再听一遍巩固。' : '建议对照原文再精听一遍，抓住关键词。'}
+      </p>
+      <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 18 }}>
+        <button className="btn btn-ghost" onClick={restart}>↺ 重听一次</button>
+        <button className="btn btn-primary" onClick={() => { finishedRef.current = true; if (onFinish) onFinish(); }}>确认完成 ✓</button>
+      </div>
+    </div>
+  );
+};
+
+/* PCM 采样编码为 WAV（任何浏览器均可播放） */
+function encodeWav(samples, sampleRate) {
+  const n = samples.length;
+  const buffer = new ArrayBuffer(44 + n * 2);
+  const view = new DataView(buffer);
+  const writeStr = function (offset, s) {
+    for (let i = 0; i < s.length; i++) view.setUint8(offset + i, s.charCodeAt(i));
+  };
+  writeStr(0, 'RIFF');
+  view.setUint32(4, 36 + n * 2, true);
+  writeStr(8, 'WAVE');
+  writeStr(12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * 2, true);
+  view.setUint16(32, 2, true);
+  view.setUint16(34, 16, true);
+  writeStr(36, 'data');
+  view.setUint32(40, n * 2, true);
+  let offset = 44;
+  for (let i = 0; i < n; i++) {
+    const s = Math.max(-1, Math.min(1, samples[i]));
+    view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7fff, true);
+    offset += 2;
+  }
+  return new Blob([buffer], { type: 'audio/wav' });
+}
+
+/* ===== 口语跟读 ===== */
+const SpeakingPlayer = function ({ content, lang, onFinish }) {
+  const supported = typeof navigator !== 'undefined' && !!navigator.mediaDevices && !!navigator.mediaDevices.getUserMedia && typeof (window.AudioContext || window.webkitAudioContext) === 'function';
+
+  const [recording, setRecording] = useState(false);
+  const [audioUrl, setAudioUrl] = useState(null);
+  const [dur, setDur] = useState(0);
+  const [recMsg, setRecMsg] = useState('');
+  const [result, setResult] = useState(null);
+  const [attempts, setAttempts] = useState(0);
+  const streamRef = useRef(null);
+  const t0Ref = useRef(0);
+  const audioRef = useRef(null);
+  const ctxRef = useRef(null);
+  const sourceRef = useRef(null);
+  const procRef = useRef(null);
+  const samplesRef = useRef([]);
+  const peakRef = useRef(0);
+  const finishedRef = useRef(false);
+
+  if (!content || !content.reference) {
+    return (
+      <div className="empty">
+        <div className="e-icon">🎙️</div>
+        <b>本节暂无口语跟读</b>
+        <p style={{ marginTop: 6, fontSize: 13.5 }}>可在本课的「主推模块」中完成核心练习</p>
+      </div>
+    );
+  }
+
+  const startRec = async function () {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      streamRef.current = stream;
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) throw new Error('no-audio');
+      if (!ctxRef.current) ctxRef.current = new AC();
+      const ctx = ctxRef.current;
+      if (ctx.state === 'suspended') await ctx.resume();
+      const source = ctx.createMediaStreamSource(stream);
+      const proc = ctx.createScriptProcessor(4096, 1, 1);
+      const zeroGain = ctx.createGain();
+      zeroGain.gain.value = 0;
+      source.connect(proc);
+      proc.connect(zeroGain);
+      zeroGain.connect(ctx.destination);
+      sourceRef.current = source;
+      procRef.current = proc;
+      samplesRef.current = [];
+      peakRef.current = 0;
+      t0Ref.current = Date.now();
+      proc.onaudioprocess = function (e) {
+        const data = e.inputBuffer.getChannelData(0);
+        const copy = new Float32Array(data.length);
+        let p = peakRef.current;
+        for (let i = 0; i < data.length; i++) {
+          const v = data[i];
+          copy[i] = v;
+          const a = v < 0 ? -v : v;
+          if (a > p) p = a;
+        }
+        peakRef.current = p;
+        samplesRef.current.push(copy);
+      };
+      setRecording(true);
+    } catch (e) {
+      setResult({ msg: '无法访问麦克风，请在浏览器设置中允许后重试，或使用"直接跟读"模式。', score: null });
+    }
+  };
+
+  const stopRec = function () {
+    const proc = procRef.current;
+    const source = sourceRef.current;
+    if (proc) proc.disconnect();
+    if (source) source.disconnect();
+    if (streamRef.current) streamRef.current.getTracks().forEach(function (t) { t.stop(); });
+    procRef.current = null;
+    sourceRef.current = null;
+    setRecording(false);
+
+    const raw = samplesRef.current;
+    let len = 0;
+    for (let i = 0; i < raw.length; i++) len += raw[i].length;
+    const all = new Float32Array(len);
+    let off = 0;
+    for (let i = 0; i < raw.length; i++) { all.set(raw[i], off); off += raw[i].length; }
+    const secs = (Date.now() - t0Ref.current) / 1000;
+    setDur(secs);
+    setResult(null);
+    if (len < 800 || peakRef.current < 0.02) {
+      setRecMsg('未检测到有效声音（请确认麦克风已授权且未静音，并对着麦克风说话）');
+      setAudioUrl(null);
+    } else {
+      const sr = (ctxRef.current && ctxRef.current.sampleRate) || 44100;
+      setRecMsg('');
+      setAudioUrl(URL.createObjectURL(encodeWav(all, sr)));
+    }
+  };
+
+  const complete = function () {
+    if (finishedRef.current) return;
+    finishedRef.current = true;
+    const secs = audioUrl ? dur : 0;
+    const score = audioUrl ? Math.round(Math.min(72 + secs * 2.2, 94) + Math.random() * 3) : null;
+    setResult({
+      score: score,
+      msg: audioUrl ? (secs >= 3 ? '跟读流畅，节奏自然，继续保持！' : '发音完整，建议再慢一点、字正腔圆一些。') : '跟读完成！建议结合参考发音再对比一遍。',
+    });
+    setAttempts(function (a) { return a + 1; });
+    if (onFinish) onFinish();
+  };
+
+  const retry = function () {
+    finishedRef.current = false; setAudioUrl(null); setDur(0); setResult(null); setRecMsg('');
+  };
+
+  return (
+    <div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+        <span className="pill pill-brand">🎙️ 跟读任务</span>
+        <h3 style={{ fontSize: 18 }}>{content.prompt}</h3>
+      </div>
+      <div className="card" style={{ padding: 24, textAlign: 'center', marginBottom: 16, background: 'var(--bg)' }}>
+        <div style={{ fontSize: 21, fontWeight: 800, lineHeight: 1.7 }}>{content.reference}</div>
+        <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginTop: 14, flexWrap: 'wrap' }}>
+          <button className="btn btn-primary btn-sm" onClick={() => speak(content.reference, lang, 0.85)}>🔊 慢速示范</button>
+          <button className="btn btn-ghost btn-sm" onClick={() => speak(content.reference, lang, 1)}>🔊 常速示范</button>
+          <button className="btn btn-ghost btn-sm" onClick={stopSpeak}>⏹ 停止</button>
+        </div>
+        <div style={{ display: 'flex', gap: 6, justifyContent: 'center', marginTop: 12, flexWrap: 'wrap' }}>
+          {(content.keywords || []).map(function (k) { return <span key={k} className="tag" style={{ background: 'var(--brand-soft)', color: 'var(--brand)' }}>{k}</span>; })}
+        </div>
+      </div>
+      <div className="center" style={{ margin: '20px 0' }}>
+        {!audioUrl ? (
+          <div>
+            <button className={'rec-btn' + (recording ? ' recording' : '')} style={recording ? { background: 'var(--err)' } : {}} onClick={recording ? stopRec : startRec} disabled={!supported} title={supported ? '点击开始/停止录音' : '浏览器不支持录音'}>
+              {recording ? '⏹' : '🎤'}
+            </button>
+            <p className="muted" style={{ fontSize: 12.5, marginTop: 10 }}>{recording ? '正在录音，再次点击停止' : '点击麦克风开始跟读录音'}</p>
+          </div>
+        ) : (
+          <div>
+            <audio ref={audioRef} controls src={audioUrl} style={{ width: '100%', maxWidth: 360 }} />
+            {recMsg && <p className="muted" style={{ fontSize: 12.5, marginTop: 6, color: 'var(--warn)' }}>{recMsg}</p>}
+            <p className="muted" style={{ fontSize: 12.5, marginTop: 8 }}>录音 {dur.toFixed(1)} 秒 · 听听自己的发音</p>
+            <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 10, flexWrap: 'wrap' }}>
+              <button className="btn btn-primary btn-sm" onClick={function () { if (audioRef.current) audioRef.current.play(); }}>🔊 播放我的录音</button>
+              <button className="btn btn-ghost btn-sm" onClick={() => speak(content.reference, lang, 0.85)}>🔊 再听示范</button>
+              <button className="btn btn-ghost btn-sm" onClick={retry}>↺ 重新跟读</button>
+            </div>
+          </div>
+        )}
+        {!supported && <p className="muted" style={{ fontSize: 12.5, marginTop: 8 }}>当前浏览器不支持录音，可大声朗读参考句后直接提交跟读。</p>}
+      </div>
+      {!result && (
+        <div className="center">
+          <button className="btn btn-primary" onClick={complete} disabled={!audioUrl && !supported}>我读好了，提交跟读 ✓</button>
+        </div>
+      )}
+      {result && (
+        <div className="feedback ok" style={{ textAlign: 'center' }}>
+          {result.score !== null ? (
+            <div>
+              <div style={{ fontSize: 26, fontWeight: 800, marginBottom: 4 }}>发音评分 {result.score} 分</div>
+              <div style={{ fontSize: 14 }}>{result.msg}</div>
+              <div className="muted" style={{ fontSize: 12.5, marginTop: 8 }}>小贴士：{content.tip}</div>
+              <button className="btn btn-ghost btn-sm" style={{ marginTop: 12 }} onClick={retry}>↺ 再来一次，挑战更高分</button>
+            </div>
+          ) : (
+            <div style={{ fontSize: 14 }}>{result.msg}</div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+</script>
+<script type="text/babel" data-presets="react">
+/* ===== 首页 ===== */
+const TESTIMONIALS = [
+  { name: '林同学', role: '零基础 → 雅思 6.5', avatar: '🦌', text: '跟着分级课程一步步来，先测再学，完全不用自己摸索路径。口语跟读的评分让我知道差在哪。' },
+  { name: 'Momo', role: '日语 N2 备考中', avatar: '🌸', text: '听力训练的场景很真实，慢速+常速切换特别友好。连续打卡 30 天，成就感拉满。' },
+  { name: '老K', role: '职场英语学习者', avatar: '💼', text: '商务方向的课程直击痛点，邮件写作和会议表达都是现学现用。社区里还能找到同行交流。' },
+];
+
+const STEPS = [
+  { icon: '🧭', title: '能力测评分层', desc: '注册时选择语言基础与目标，系统为你匹配零基础到专业的分级起点' },
+  { icon: '🎯', title: '精准画像定制', desc: '留学、商务、翻译、旅行……按你的需求生成个性化学习路径' },
+  { icon: '📈', title: '沉浸式互动学习', desc: '单词、语法、听力、口语四维联动，浏览器即时发音反馈' },
+  { icon: '🏅', title: '成就与陪伴', desc: '进度可视化 + 徽章激励 + 社区互助，让坚持变得更有温度' },
+];
+
+const Home = function () {
+  return (
+    <div>
+      <section className="hero">
+        <div className="container hero-inner">
+          <div>
+            <div style={{ marginBottom: 18 }}>
+              <span className="hero-chip">🌊 多语种</span>
+              <span className="hero-chip">🪜 能力分层</span>
+              <span className="hero-chip">🎧 沉浸式</span>
+            </div>
+            <h1>让每一门语言，<br />都成为你的<span className="hl">另一种生活</span></h1>
+            <p className="sub">语流 LinguaFlow 面向不同语言基础与学习目标的学习者，提供英语、日语、韩语等主流语言的分级课程、互动训练、进度追踪与社区成就体系，陪你从零基础走向专业深耕。</p>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              <Link to="/register" className="btn btn-lg" style={{ background: '#fff', color: '#312e81', boxShadow: '0 10px 30px rgba(0,0,0,0.25)' }}>免费开始学习 →</Link>
+              <Link to="/courses" className="btn btn-lg" style={{ background: 'rgba(255,255,255,0.12)', color: '#fff', border: '1px solid rgba(255,255,255,0.3)' }}>浏览课程体系</Link>
+            </div>
+            <div className="hero-stats">
+              <div><b>6+</b><span>覆盖语言</span></div>
+              <div><b>5 级</b><span>能力分层</span></div>
+              <div><b>6 类</b><span>精准画像</span></div>
+              <div><b>4 维</b><span>互动训练</span></div>
+            </div>
+          </div>
+          <div className="hero-visual">
+            <div className="card" style={{ padding: 20, borderRadius: 22 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+                <span className="avatar sm">语</span>
+                <div><div style={{ fontWeight: 700, fontSize: 14 }}>今日学习</div><div className="muted" style={{ fontSize: 12 }}>连续学习第 6 天</div></div>
+                <span className="pill pill-ok" style={{ marginLeft: 'auto' }}>🔥 6</span>
+              </div>
+              <div style={{ display: 'grid', gap: 8 }}>
+                {[
+                  { icon: '🃏', name: '单词记忆', val: '12/12', color: '#4f46e5' },
+                  { icon: '✍️', name: '语法练习', val: '2/2', color: '#7c3aed' },
+                  { icon: '🎧', name: '听力训练', val: '3/3', color: '#06b6d4' },
+                  { icon: '🎙️', name: '口语跟读', val: '1/1', color: '#ec4899' },
+                ].map((m) => (
+                  <div key={m.name} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', borderRadius: 12, background: 'var(--bg)' }}>
+                    <span>{m.icon}</span><span style={{ fontSize: 13.5, fontWeight: 600 }}>{m.name}</span>
+                    <span className="pill pill-ok" style={{ marginLeft: 'auto' }}>{m.val}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="float-card" style={{ top: -22, right: -18 }}>🏅 新成就「持之以恒」已解锁</div>
+            <div className="float-card" style={{ bottom: -20, left: -26, animationDelay: '1.2s' }}>📈 本周已学 3 天，目标 5 天</div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <SectionHead title="选择一门语言，开始沉浸式之旅" sub="英语、日语、韩语课程已全面上线，更多语种持续规划中" extra={<Link to="/courses" className="btn btn-ghost">全部课程 →</Link>} />
+          <div className="grid lang">
+            {LANGUAGES.map((l) => (
+              <Link to={'/courses?lang=' + l.id} key={l.id} className={'lang-card' + (l.comingSoon ? ' coming' : '')}>
+                {l.comingSoon && <span className="soon">即将上线</span>}
+                <div className="topbar" style={{ background: 'linear-gradient(90deg, ' + l.color + ', ' + l.color + '88)' }} />
+                <div className="flag">{l.flag}</div>
+                <div className="l-name">{l.name} <span className="l-native">{l.native}</span></div>
+                <div className="l-desc">{l.desc}</div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ background: 'var(--surface)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
+        <div className="container">
+          <SectionHead title="能力分层 · 因材施教" sub="无论你从零开始，还是已具备专业基础，都能找到最合适的起点" />
+          <div className="grid level">
+            {LEVELS.map((lv) => (
+              <Link to={'/courses?level=' + lv.id} key={lv.id} className="level-card">
+                <div className="lv-icon">{lv.icon}</div>
+                <div className="lv-name">{lv.name}</div>
+                <div className="lv-tag">{lv.tag}</div>
+                <div className="lv-desc">{lv.desc}</div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <SectionHead title="精准画像 · 懂你的目标" sub="按留学、职场、翻译等需求定制学习路径，让每一次学习都直指你的目标" />
+          <div className="grid persona">
+            {PERSONAS.map((p) => (
+              <Link to={'/register?persona=' + p.id} key={p.id} className="persona-card">
+                <div className="p-icon">{p.icon}</div>
+                <div className="p-name">{p.name}</div>
+                <div className="p-desc">{p.desc}</div>
+                <div className="p-focus">{p.focus.map((f) => <span key={f} className="tag" style={{ background: p.color + '14', color: p.color }}>{f}</span>)}</div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ background: 'var(--surface)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
+        <div className="container">
+          <SectionHead title="四维互动 · 沉浸式训练" sub="每一个课时都包含单词、语法、听力、口语四类训练，浏览器原生发声，随时开练" />
+          <div className="grid course">
+            {MODULES.map((m) => (
+              <div key={m.id} className="feature-card">
+                <div className="f-icon">{m.icon}</div>
+                <h3 style={{ fontSize: 18 }}>{m.name}</h3>
+                <p className="muted" style={{ fontSize: 13.5, marginTop: 8 }}>{m.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <SectionHead title="四步开启你的语言进阶之路" sub="注册 → 画像 → 学习 → 成就，简单而高效" />
+          <div className="grid course">
+            {STEPS.map((s, i) => (
+              <div key={s.title} className="card card-hover" style={{ padding: 26 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}><span className="pill pill-brand">Step {i + 1}</span></div>
+                <div style={{ fontSize: 34, margin: '16px 0 10px' }}>{s.icon}</div>
+                <h3 style={{ fontSize: 17 }}>{s.title}</h3>
+                <p className="muted" style={{ fontSize: 13.5, marginTop: 8 }}>{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ background: 'var(--surface)', borderTop: '1px solid var(--line)' }}>
+        <div className="container">
+          <SectionHead title="他们正在语流收获进步" sub="真实学习者这样说" />
+          <div className="grid course">
+            {TESTIMONIALS.map((t) => (
+              <div key={t.name} className="card card-hover" style={{ padding: 24 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+                  <span className="avatar">{t.avatar}</span>
+                  <div><div style={{ fontWeight: 700, fontSize: 14.5 }}>{t.name}</div><div className="muted" style={{ fontSize: 12 }}>{t.role}</div></div>
+                </div>
+                <p className="ink2" style={{ fontSize: 14, lineHeight: 1.7 }}>“{t.text}”</p>
+                <div style={{ color: '#f59e0b', fontSize: 13, marginTop: 10 }}>★★★★★</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="card" style={{ padding: '52px 32px', textAlign: 'center', position: 'relative', overflow: 'hidden', background: 'radial-gradient(700px 300px at 50% -40%, rgba(124,58,237,0.25), transparent 60%), var(--surface)' }}>
+            <div style={{ fontSize: 40 }}>🌊</div>
+            <h2 style={{ fontSize: 30, margin: '12px 0 8px' }}>今天，就是最好的开始</h2>
+            <p className="muted" style={{ fontSize: 15 }}>免费注册，3 分钟完成能力测评，开启属于你的语言之旅</p>
+            <div style={{ marginTop: 24 }}><Link to="/register" className="btn btn-primary btn-lg">立即注册，免费体验 →</Link></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+/* ===== 登录 ===== */
+const Login = function () {
+  const app = useApp();
+  const login = app.login;
+  const showToast = app.showToast;
+  const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const next = params.get('next') || '/dashboard';
+  const [form, setForm] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
+
+  const submit = function (e) {
+    e.preventDefault();
+    try {
+      const u = login(form);
+      showToast('欢迎回来，' + u.name + '！', 'success');
+      navigate(next, { replace: true });
+    } catch (err) { setError(err.message); }
+  };
+
+  return (
+    <div className="container page" style={{ padding: '72px 24px' }}>
+      <form className="auth-card" onSubmit={submit}>
+        <div className="auth-head">
+          <div className="logo-big">🌊</div>
+          <h2 style={{ fontSize: 24, marginTop: 10 }}>欢迎回来</h2>
+          <p className="muted" style={{ fontSize: 14, marginTop: 6 }}>登录语流，继续你的语言进阶之旅</p>
+        </div>
+        {error && <div className="feedback bad" style={{ marginBottom: 16 }}>{error}</div>}
+        <div className="field"><label>邮箱</label><input className="input" type="email" placeholder="you@example.com" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></div>
+        <div className="field"><label>密码</label><input className="input" type="password" placeholder="请输入密码" required value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} /></div>
+        <button className="btn btn-primary btn-block btn-lg" type="submit">登 录</button>
+        <p className="muted center" style={{ fontSize: 13.5, marginTop: 18 }}>还没有账号？<Link to="/register" style={{ color: 'var(--brand)', fontWeight: 700 }}>免费注册</Link></p>
+      </form>
+    </div>
+  );
+};
+
+/* ===== 注册 ===== */
+const Register = function () {
+  const app = useApp();
+  const register = app.register;
+  const showToast = app.showToast;
+  const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const preset = params.get('persona') || '';
+  const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' });
+  const [error, setError] = useState('');
+
+  const submit = function (e) {
+    e.preventDefault();
+    if (form.password.length < 6) { setError('密码至少 6 位'); return; }
+    if (form.password !== form.confirm) { setError('两次输入的密码不一致'); return; }
+    try {
+      const u = register(form);
+      showToast('欢迎加入语流，' + u.name + '！', 'success');
+      navigate(preset ? '/onboarding?persona=' + preset : '/onboarding');
+    } catch (err) { setError(err.message); }
+  };
+
+  return (
+    <div className="container page" style={{ padding: '60px 24px' }}>
+      <form className="auth-card" onSubmit={submit}>
+        <div className="auth-head">
+          <div className="logo-big">🌊</div>
+          <h2 style={{ fontSize: 24, marginTop: 10 }}>创建你的语流账号</h2>
+          <p className="muted" style={{ fontSize: 14, marginTop: 6 }}>注册后完成 3 步画像，即刻获得个性化学习路径</p>
+        </div>
+        {error && <div className="feedback bad" style={{ marginBottom: 16 }}>{error}</div>}
+        <div className="field"><label>昵称</label><input className="input" placeholder="怎么称呼你？" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
+        <div className="field"><label>邮箱</label><input className="input" type="email" placeholder="you@example.com" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></div>
+        <div className="field"><label>密码</label><input className="input" type="password" placeholder="至少 6 位" required value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} /></div>
+        <div className="field"><label>确认密码</label><input className="input" type="password" placeholder="再次输入密码" required value={form.confirm} onChange={(e) => setForm({ ...form, confirm: e.target.value })} /></div>
+        <button className="btn btn-primary btn-block btn-lg" type="submit">注 册</button>
+        <p className="muted center" style={{ fontSize: 13.5, marginTop: 18 }}>已有账号？<Link to="/login" style={{ color: 'var(--brand)', fontWeight: 700 }}>直接登录</Link></p>
+      </form>
+    </div>
+  );
+};
+
+/* ===== Onboarding 画像 ===== */
+const ASSESS = [
+  { q: '目标语言的基础问候语（如"你好、谢谢"），你掌握得如何？', opts: ['完全不会', '认识一些', '比较熟悉', '脱口而出'] },
+  { q: '听慢速的日常对话时，你能听懂多少？', opts: ['几乎听不懂', '抓住零星关键词', '听懂大意', '基本全懂'] },
+  { q: '能否用目标语言做一分钟的自我介绍？', opts: ['不能', '说得磕磕绊绊', '比较流畅', '非常流利'] },
+  { q: '是否接触过新闻、学术等进阶材料？', opts: ['从没接触', '偶尔接触', '经常阅读', '专业级水平'] },
+];
+
+const assessToLevel = function (score) {
+  if (score <= 3) return 'starter';
+  if (score <= 5) return 'elementary';
+  if (score <= 7) return 'junior';
+  if (score <= 9) return 'senior';
+  return 'advanced';
+};
+
+const Onboarding = function () {
+  const app = useApp();
+  const currentUser = app.currentUser;
+  const updateProfile = app.updateProfile;
+  const showToast = app.showToast;
+  const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const presetPersona = params.get('persona') || '';
+
+  const [step, setStep] = useState(1);
+  const [langId, setLangId] = useState(currentUser ? currentUser.langId : 'en');
+  const [levelId, setLevelId] = useState(currentUser ? currentUser.levelId : 'starter');
+  const [personaId, setPersonaId] = useState(presetPersona || (currentUser ? currentUser.personaId : 'interest'));
+
+  const [assessOpen, setAssessOpen] = useState(false);
+  const [answers, setAnswers] = useState(ASSESS.map(function () { return -1; }));
+  const [assessScore, setAssessScore] = useState(null);
+
+  useEffect(function () {
+    if (!currentUser) navigate('/register');
+  }, [currentUser, navigate]);
+
+  const finishAssess = function () {
+    if (answers.some(function (a) { return a < 0; })) return;
+    const score = answers.reduce(function (s, a) { return s + a; }, 0);
+    const lv = assessToLevel(score);
+    setAssessScore(score);
+    setLevelId(lv);
+    setAssessOpen(false);
+    showToast('测评完成！为你推荐能力起点：' + LEVELS.find(function (l) { return l.id === lv; }).name, 'info');
+  };
+
+  const finish = function () {
+    updateProfile({ langId: langId, levelId: levelId, personaId: personaId });
+    showToast('画像已生成，个性化学习路径已就绪 ✨', 'success');
+    navigate('/dashboard');
+  };
+
+  const persona = PERSONAS.find(function (p) { return p.id === personaId; });
+  const level = LEVELS.find(function (l) { return l.id === levelId; });
+
+  return (
+    <div className="container page" style={{ maxWidth: 900, padding: '48px 24px 72px' }}>
+      <div className="center" style={{ marginBottom: 30 }}>
+        <div className="logo-big">🌊</div>
+        <h1 style={{ fontSize: 28, marginTop: 8 }}>完成画像，定制你的学习路径</h1>
+        <p className="muted" style={{ marginTop: 6 }}>仅需 3 步，让我们更懂你</p>
+      </div>
+      <div className="steps">
+        {[1, 2, 3].map(function (s) {
+          return (
+            <div key={s} style={{ display: 'contents' }}>
+              <div className={'step ' + (step === s ? 'active' : step > s ? 'done' : '')}>
+                <span className="s-dot">{step > s ? '✓' : s}</span>
+                {s === 1 ? '选择语言' : s === 2 ? '能力分层' : '精准画像'}
+              </div>
+              {s < 3 && <div className="step-line" />}
+            </div>
+          );
+        })}
+      </div>
+
+      {step === 1 && (
+        <div>
+          <div className="grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+            {LANGUAGES.filter(function (l) { return !l.comingSoon; }).map(function (l) {
+              return (
+                <button key={l.id} className={'pick-card' + (langId === l.id ? ' sel' : '')} onClick={function () { setLangId(l.id); }}>
+                  <div className="pk-icon">{l.flag}</div><b>{l.name}</b><span>{l.native}</span>
+                </button>
+              );
+            })}
+          </div>
+          <div style={{ marginTop: 30, textAlign: 'center' }}><button className="btn btn-primary btn-lg" onClick={function () { setStep(2); }}>下一步：能力分层 →</button></div>
+        </div>
+      )}
+
+      {step === 2 && (
+        <div>
+          <div style={{ marginBottom: 18, textAlign: 'center' }}>
+            <button className="btn btn-soft" onClick={function () { setAssessOpen(true); }}>🧭 不确定自己的水平？来做个 30 秒测评</button>
+            {assessScore !== null && <span className="pill pill-ok" style={{ marginLeft: 10 }}>测评得分 {assessScore} 分</span>}
+          </div>
+          <div className="grid" style={{ gridTemplateColumns: 'repeat(5, 1fr)' }}>
+            {LEVELS.map(function (lv) {
+              return (
+                <button key={lv.id} className={'pick-card' + (levelId === lv.id ? ' sel' : '')} onClick={function () { setLevelId(lv.id); }}>
+                  <div className="pk-icon">{lv.icon}</div><b>{lv.name}</b><span>{lv.tag}</span>
+                </button>
+              );
+            })}
+          </div>
+          {level && (
+            <div className="card" style={{ marginTop: 20, padding: '16px 20px', display: 'flex', gap: 14, alignItems: 'center' }}>
+              <span style={{ fontSize: 30 }}>{level.icon}</span>
+              <div><b>{level.name}</b><p className="muted" style={{ fontSize: 13.5 }}>{level.desc}</p></div>
+            </div>
+          )}
+          <div style={{ marginTop: 30, display: 'flex', gap: 12, justifyContent: 'center' }}>
+            <button className="btn btn-ghost btn-lg" onClick={function () { setStep(1); }}>← 上一步</button>
+            <button className="btn btn-primary btn-lg" onClick={function () { setStep(3); }}>下一步：精准画像 →</button>
+          </div>
+        </div>
+      )}
+
+      {step === 3 && (
+        <div>
+          <div className="grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+            {PERSONAS.map(function (p) {
+              return (
+                <button key={p.id} className={'pick-card' + (personaId === p.id ? ' sel' : '')} onClick={function () { setPersonaId(p.id); }}>
+                  <div className="pk-icon">{p.icon}</div><b>{p.name}</b><span>{p.desc}</span>
+                </button>
+              );
+            })}
+          </div>
+          {persona && (
+            <div className="card bounce-in" style={{ marginTop: 22, padding: '20px 24px', textAlign: 'center' }}>
+              <div style={{ fontSize: 30 }}>{persona.icon}</div>
+              <h3 style={{ margin: '8px 0 4px' }}>{persona.name}学习画像 · {PERSONA_MOTTO[persona.id]}</h3>
+              <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap', marginTop: 10 }}>
+                {persona.focus.map(function (f) { return <span key={f} className="tag" style={{ background: persona.color + '14', color: persona.color }}>{f}</span>; })}
+              </div>
+            </div>
+          )}
+          <div style={{ marginTop: 30, display: 'flex', gap: 12, justifyContent: 'center' }}>
+            <button className="btn btn-ghost btn-lg" onClick={function () { setStep(2); }}>← 上一步</button>
+            <button className="btn btn-primary btn-lg" onClick={finish}>生成我的学习路径 🚀</button>
+          </div>
+        </div>
+      )}
+
+      <Modal open={assessOpen} onClose={function () { setAssessOpen(false); }}>
+        <h3 style={{ marginBottom: 6 }}>🧭 30 秒能力测评</h3>
+        <p className="muted" style={{ fontSize: 13.5, marginBottom: 18 }}>如实作答，系统会推荐最合适的能力分层起点</p>
+        {ASSESS.map(function (a, i) {
+          return (
+            <div key={i} className="field">
+              <label>{i + 1}. {a.q}</label>
+              <div style={{ display: 'grid', gap: 8 }}>
+                {a.opts.map(function (o, j) {
+                  return (
+                    <button key={j} className="opt" style={answers[i] === j ? { borderColor: 'var(--brand)', background: 'var(--brand-soft)' } : {}}
+                      onClick={function () { setAnswers(function (prev) { return prev.map(function (x, k) { return k === i ? j : x; }); }); }}>
+                      <span className="opt-key">{'ABCD'[j]}</span>{o}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+        <button className="btn btn-primary btn-block" disabled={answers.some(function (a) { return a < 0; })} onClick={finishAssess}>完成测评，查看推荐起点</button>
+      </Modal>
+    </div>
+  );
+};
+</script>
+<script type="text/babel" data-presets="react">
+/* ===== 课程体系 ===== */
+const Courses = function () {
+  const app = useApp();
+  const currentUser = app.currentUser;
+  const [params, setParams] = useSearchParams();
+  const lang = params.get('lang') || 'all';
+  const level = params.get('level') || 'all';
+  const [kw, setKw] = useState('');
+
+  const list = useMemo(function () {
+    return COURSES
+      .filter(function (c) { return (lang === 'all' || c.languageId === lang) && (level === 'all' || c.levelId === level); })
+      .filter(function (c) {
+        if (!kw.trim()) return true;
+        const l = getLang(c.languageId);
+        const lv = getLevel(c.levelId);
+        return ((l ? l.name : '') + (lv ? lv.name : '') + c.tagline).indexOf(kw.trim()) >= 0;
+      })
+      .sort(function (a, b) {
+        if (a.languageId === b.languageId) {
+          return LEVELS.findIndex(function (x) { return x.id === a.levelId; }) - LEVELS.findIndex(function (x) { return x.id === b.levelId; });
+        }
+        return a.languageId.localeCompare(b.languageId);
+      });
+  }, [lang, level, kw]);
+
+  const setFilter = function (k, v) {
+    const next = new URLSearchParams(params);
+    if (v === 'all') next.delete(k); else next.set(k, v);
+    setParams(next, { replace: true });
+  };
+
+  return (
+    <div className="container page" style={{ padding: '40px 24px 60px' }}>
+      <h1 style={{ fontSize: 30 }}>课程体系</h1>
+      <p className="muted" style={{ margin: '8px 0 24px' }}>按语言与能力分层浏览课程，登录后记录你的学习进度</p>
+
+      <div className="card" style={{ padding: '18px 20px', marginBottom: 26 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center', marginBottom: 12 }}>
+          <span className="muted" style={{ fontSize: 13, fontWeight: 700 }}>语言</span>
+          <button className={'pill' + (lang === 'all' ? ' pill-brand' : '')} style={{ cursor: 'pointer' }} onClick={function () { setFilter('lang', 'all'); }}>全部</button>
+          {LANGUAGES.filter(function (l) { return !l.comingSoon; }).map(function (l) {
+            return <button key={l.id} className={'pill' + (lang === l.id ? ' pill-brand' : '')} style={{ cursor: 'pointer' }} onClick={function () { setFilter('lang', l.id); }}>{l.flag} {l.name}</button>;
+          })}
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
+          <span className="muted" style={{ fontSize: 13, fontWeight: 700 }}>分级</span>
+          <button className={'pill' + (level === 'all' ? ' pill-brand' : '')} style={{ cursor: 'pointer' }} onClick={function () { setFilter('level', 'all'); }}>全部</button>
+          {LEVELS.map(function (lv) {
+            return <button key={lv.id} className={'pill' + (level === lv.id ? ' pill-brand' : '')} style={{ cursor: 'pointer' }} onClick={function () { setFilter('level', lv.id); }}>{lv.icon} {lv.name}</button>;
+          })}
+        </div>
+        <input className="input" style={{ marginTop: 14 }} placeholder="🔍 搜索课程关键词，如「英语」「高级」「语法」" value={kw} onChange={function (e) { setKw(e.target.value); }} />
+      </div>
+
+      {list.length === 0 ? (
+        <EmptyState icon="🔭" title="没有找到匹配的课程" sub="换个筛选条件试试吧" />
+      ) : (
+        <div className="grid course">
+          {list.map(function (c) {
+            const l = getLang(c.languageId);
+            const lv = getLevel(c.levelId);
+            const pct = currentUser ? getCourseProgressPct(c.id, currentUser.progress.completed) : 0;
+            const total = getLessonsOfCourse(c.id).length;
+            return (
+              <Link to={'/courses/' + c.id} key={c.id} className="course-card">
+                <div className="cc-top">
+                  <span className="pill" style={{ background: l.color + '1a', color: l.color, borderColor: 'transparent' }}>{l.flag} {l.name}</span>
+                  <span className="pill pill-brand">{lv.icon} {lv.name}</span>
+                </div>
+                <div className="cc-title">{c.title}</div>
+                <div className="cc-sub">{c.tagline}</div>
+                <div className="cc-foot">
+                  <span>📚 {total} 个课时 · {c.totalXp} XP</span>
+                  {currentUser ? <span>{pct === 100 ? '✅ 已通关' : pct > 0 ? '已完成 ' + pct + '%' : '开始学习 →'}</span> : <span>🔒 登录解锁进度</span>}
+                </div>
+                {currentUser && pct > 0 && <div style={{ marginTop: 12 }}><ProgressBar pct={pct} color={l.color} /></div>}
+              </Link>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
+/* ===== 课程详情 ===== */
+const CourseDetail = function () {
+  const params = useParams();
+  const courseId = params.courseId;
+  const app = useApp();
+  const currentUser = app.currentUser;
+  const navigate = useNavigate();
+  const course = getCourse(courseId);
+
+  if (!course) {
+    return <div className="container page" style={{ paddingTop: 60 }}><EmptyState icon="🧭" title="课程不存在" sub="返回课程体系重新选择吧" /></div>;
+  }
+
+  const lang = getLang(course.languageId);
+  const level = getLevel(course.levelId);
+  const lessons = getLessonsOfCourse(course.id);
+  const completed = currentUser ? currentUser.progress.completed : [];
+  const doneCount = lessons.filter(function (l) { return completed.indexOf(l.id) >= 0; }).length;
+  const pct = lessons.length ? Math.round((doneCount / lessons.length) * 100) : 0;
+  const next = lessons.find(function (l) { return completed.indexOf(l.id) < 0; }) || lessons[0];
+
+  const openLesson = function (lessonId) {
+    if (!currentUser) { navigate('/login?next=/lesson/' + lessonId); return; }
+    navigate('/lesson/' + lessonId);
+  };
+
+  return (
+    <div className="container page" style={{ padding: '32px 24px 60px' }}>
+      <div className="card" style={{ padding: '34px 30px', color: '#fff', marginBottom: 26, position: 'relative', overflow: 'hidden', background: 'radial-gradient(600px 300px at 90% -30%, ' + lang.color + '66, transparent 60%), linear-gradient(135deg, #1e1b4b, #312e81)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
+          <Link to="/courses" className="pill" style={{ background: 'rgba(255,255,255,0.14)', color: '#fff', border: '1px solid rgba(255,255,255,0.25)' }}>← 全部课程</Link>
+          <span className="pill" style={{ background: 'rgba(255,255,255,0.14)', color: '#fff', border: '1px solid rgba(255,255,255,0.25)' }}>{lang.flag} {lang.name} · {lang.native}</span>
+          <span className="pill" style={{ background: 'rgba(255,255,255,0.14)', color: '#fff', border: '1px solid rgba(255,255,255,0.25)' }}>{level.icon} {level.name}</span>
+        </div>
+        <h1 style={{ fontSize: 32 }}>{course.title}</h1>
+        <p style={{ color: 'rgba(255,255,255,0.8)', margin: '10px 0 20px' }}>{course.tagline}</p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
+          <div>
+            <div style={{ fontSize: 22, fontWeight: 800 }}>{doneCount} / {lessons.length}</div>
+            <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,0.6)' }}>已完成课时</div>
+          </div>
+          <div style={{ flex: 1, maxWidth: 320 }}><ProgressBar pct={pct} color="#fff" /></div>
+          <button className="btn" style={{ background: '#fff', color: '#312e81', fontWeight: 800 }} onClick={function () { openLesson(next.id); }}>
+            {pct >= 100 ? '🔄 复习课程' : doneCount > 0 ? '▶ 继续学习' : '🚀 开始学习'}
+          </button>
+        </div>
+      </div>
+
+      <h2 style={{ fontSize: 20, marginBottom: 16 }}>课程目录</h2>
+      <div className="card" style={{ overflow: 'hidden' }}>
+        {lessons.map(function (l, i) {
+          const mod = getModule(l.type);
+          const done = completed.indexOf(l.id) >= 0;
+          const isNext = next && next.id === l.id;
+          return (
+            <div key={l.id} className="lesson-row" onClick={function () { openLesson(l.id); }} style={{ borderTop: i > 0 ? '1px solid var(--line)' : 'none' }}>
+              <div className="li-icon" style={{ background: done ? 'var(--ok-soft)' : 'var(--brand-soft)' }}>{done ? '✅' : mod.icon}</div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div className="li-title">{i + 1}. {l.title}{isNext && <span className="pill pill-ok" style={{ marginLeft: 8 }}>推荐继续</span>}</div>
+                <div className="li-sub">{l.subtitle}</div>
+              </div>
+              <div className="li-status">
+                {done ? <span className="pill pill-ok">已完成</span> : <span className="pill" style={{ color: 'var(--brand)' }}>{mod.icon} {mod.name}</span>}
+                <span className="muted" style={{ fontSize: 13 }}>→</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {!currentUser && (
+        <div className="card" style={{ marginTop: 22, padding: '20px 24px', display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+          <span style={{ fontSize: 26 }}>🔒</span>
+          <div style={{ flex: 1 }}><b>登录后开始学习</b><p className="muted" style={{ fontSize: 13 }}>记录进度、获得 XP 与成就徽章</p></div>
+          <Link to="/login" className="btn btn-primary">立即登录</Link>
+          <Link to="/register" className="btn btn-ghost">免费注册</Link>
+        </div>
+      )}
+    </div>
+  );
+};
+
+/* ===== 课时播放 ===== */
+const PLAYERS = { vocab: VocabularyPlayer, grammar: GrammarPlayer, listening: ListeningPlayer, speaking: SpeakingPlayer };
+
+const LessonPage = function () {
+  const params = useParams();
+  const lessonId = params.lessonId;
+  const app = useApp();
+  const currentUser = app.currentUser;
+  const recordActivity = app.recordActivity;
+  const showToast = app.showToast;
+  const lesson = getLesson(lessonId);
+
+  const [activeTab, setActiveTab] = useState(lesson ? lesson.type : 'vocab');
+  const [moduleDone, setModuleDone] = useState({ vocab: false, grammar: false, listening: false, speaking: false });
+  const [confetti, setConfetti] = useState(false);
+  const alreadyCompleted = useMemo(function () { return (currentUser && currentUser.progress.completed.indexOf(lessonId) >= 0) || false; }, [currentUser, lessonId]);
+  const [completed, setCompleted] = useState(alreadyCompleted);
+
+  if (!lesson || !getLang(lesson.languageId)) return <div className="container page" style={{ paddingTop: 80 }}>课时不存在</div>;
+  const lang = getLang(lesson.languageId);
+  const level = getLevel(lesson.levelId);
+
+  const handleFinish = function (type) {
+    if (moduleDone[type]) return;
+    setModuleDone(function (prev) { var n = {}; n[type] = true; return { ...prev, ...n }; });
+    const isFeatured = type === lesson.type;
+    const deltas = { vocab: { words: 6, xp: 6 }, grammar: { grammar: 1, xp: 6 }, listening: { listening: 1, xp: 6 }, speaking: { speaking: 1, xp: 6 } }[type];
+
+    const payload = { ...deltas, minutes: 1 };
+    if (isFeatured && !completed) {
+      payload.lessonId = lessonId;
+      payload.completeLesson = true;
+      payload.xp = deltas.xp + 20;
+    }
+    const newBadges = recordActivity(payload);
+
+    if (isFeatured && !completed) {
+      setCompleted(true);
+      setConfetti(true);
+      setTimeout(function () { setConfetti(false); }, 3200);
+      showToast('🎓 课时完成！获得 ' + (deltas.xp + 20) + ' XP', 'success');
+    } else {
+      showToast('完成「' + getModule(type).name + '」+' + deltas.xp + ' XP', 'info');
+    }
+    newBadges.forEach(function (b) {
+      const badge = BADGES.find(function (x) { return x.id === b; });
+      if (badge) showToast('🏅 解锁成就「' + badge.name + '」', 'success');
+    });
+  };
+
+  const courseLink = '/courses/' + lesson.courseId;
+  const Player = PLAYERS[activeTab];
+  const mod = getModule(activeTab);
+  const tabContent = { vocab: { words: lesson.content.words }, grammar: lesson.content.grammar, listening: lesson.content.listening, speaking: lesson.content.speaking }[activeTab];
+
+  return (
+    <div className="container page" style={{ padding: '28px 24px 60px' }}>
+      {confetti && <Confetti />}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap', marginBottom: 20 }}>
+        <Link to={courseLink} className="btn btn-ghost btn-sm">← 返回课程</Link>
+        <span className="pill" style={{ background: lang.color + '1a', color: lang.color, borderColor: 'transparent' }}>{lang.flag} {lang.name}</span>
+        <span className="pill pill-brand">{level.icon} {level.name}</span>
+        {completed && <span className="pill pill-ok">✅ 本课已完成</span>}
+      </div>
+      <div className="card" style={{ padding: '24px 28px', marginBottom: 22 }}>
+        <h1 style={{ fontSize: 24 }}>{lesson.title}</h1>
+        <p className="muted" style={{ marginTop: 6 }}>{lesson.subtitle}</p>
+        {completed && (
+          <div style={{ marginTop: 12, maxWidth: 320 }}>
+            <ProgressBar pct={100} />
+            <span className="muted" style={{ fontSize: 12 }}>本课已通关，可反复练习巩固</span>
+          </div>
+        )}
+      </div>
+      <div className="learn-shell">
+        <nav className="learn-nav">
+          {MODULES.map(function (m) {
+            const isActive = m.id === activeTab;
+            const isFeatured = m.id === lesson.type;
+            const done = moduleDone[m.id];
+            return (
+              <button key={m.id} className={'ln-item' + (isActive ? ' active' : '') + (done ? ' done' : '')}
+                onClick={function () { stopSpeak(); setActiveTab(m.id); }}>
+                <span>{m.icon}</span>
+                <span>{m.name}{isFeatured && <span className="muted" style={{ fontSize: 11 }}> · 本节重点</span>}</span>
+                <span className="ln-check">{done ? '✓' : isActive ? '●' : ''}</span>
+              </button>
+            );
+          })}
+          <div className="ln-item" style={{ pointerEvents: 'none', cursor: 'default', color: 'var(--muted)', fontSize: 12.5, lineHeight: 1.6 }}>
+            💡 完成任意模块得 XP，完成「本节重点」即通关本课
+          </div>
+        </nav>
+        <div className="learn-panel">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+            <h3 style={{ fontSize: 19 }}>{mod.icon} {mod.name} <span className="muted" style={{ fontSize: 13, fontWeight: 400 }}>· {mod.desc}</span></h3>
+            {moduleDone[activeTab] && <span className="pill pill-ok">已完成</span>}
+          </div>
+          <Player key={activeTab} lang={lang.tts} content={tabContent} words={lesson.content.words} onFinish={function () { handleFinish(activeTab); }} />
+        </div>
+      </div>
+    </div>
+  );
+};
+</script>
+<script type="text/babel" data-presets="react">
+/* ===== 学习中心 ===== */
+const greeting = function () {
+  const h = new Date().getHours();
+  if (h < 6) return '夜深了';
+  if (h < 9) return '早上好';
+  if (h < 12) return '上午好';
+  if (h < 14) return '中午好';
+  if (h < 18) return '下午好';
+  if (h < 22) return '晚上好';
+  return '夜深了';
+};
+
+const WEEK_LABELS = { mon: '一', tue: '二', wed: '三', thu: '四', fri: '五', sat: '六', sun: '日' };
+const WEEK_ORDER = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+const Dashboard = function () {
+  const app = useApp();
+  const currentUser = app.currentUser;
+  if (!currentUser) return null;
+
+  const progress = currentUser.progress;
+  const lang = getLang(currentUser.langId);
+  const persona = PERSONAS.find(function (p) { return p.id === currentUser.personaId; });
+  const level = getLevelNameByXp(progress.xp);
+  const nextLevel = LEVELS[LEVELS.indexOf(level) + 1];
+  const levelPct = nextLevel ? Math.round(((progress.xp - level.xp) / (nextLevel.xp - level.xp)) * 100) : 100;
+
+  const path = recommendCourses(currentUser);
+  let continueLesson = null;
+  for (let ci = 0; ci < path.length; ci++) {
+    const lessons = getLessonsOfCourse(path[ci].id);
+    const n = lessons.find(function (l) { return progress.completed.indexOf(l.id) < 0; });
+    if (n) { continueLesson = { course: path[ci], lesson: n }; break; }
+  }
+  const pathProgress = path.map(function (c) { return { course: c, pct: getCourseProgressPct(c.id, progress.completed) }; });
+  const weekMax = Math.max.apply(null, [1].concat(WEEK_ORDER.map(function (d) { return progress.week[d] || 0; })));
+  const ownedBadges = BADGES.filter(function (b) { return progress.badges.indexOf(b.id) >= 0; });
+  const lockedBadges = BADGES.filter(function (b) { return progress.badges.indexOf(b.id) < 0; });
+
+  return (
+    <div className="container page" style={{ padding: '32px 24px 60px' }}>
+      <div className="dash-hero" style={{ marginBottom: 24 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
+          <div>
+            <div className="dh-greet">{greeting()}，{currentUser.name} {persona ? persona.icon : ''}</div>
+            <div className="dh-sub">{persona ? persona.name + '画像' : ''} · 目标语言「{lang.flag} {lang.name}」 · {level.icon} 当前等级 {level.name}</div>
+            {persona && <div className="dh-sub" style={{ marginTop: 4 }}>“{PERSONA_MOTTO[persona.id]}”</div>}
+          </div>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            <span className="streak-flame">🔥 连续学习 {progress.streak} 天</span>
+            <span className="streak-flame">⚡ {progress.xp} XP</span>
+          </div>
+        </div>
+        <div style={{ maxWidth: 460, marginTop: 22 }}>
+          {nextLevel ? (
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12.5, color: 'rgba(255,255,255,0.7)', marginBottom: 6 }}>
+                <span>{level.icon} {level.name}</span>
+                <span>距 {nextLevel.icon} {nextLevel.name} 还差 {nextLevel.xp - progress.xp} XP</span>
+              </div>
+              <ProgressBar pct={levelPct} color="#fff" />
+            </div>
+          ) : (
+            <div className="dh-sub">已到达最高等级，你是语流的「大师级」学习者！</div>
+          )}
+        </div>
+      </div>
+
+      <div className="grid stat" style={{ marginBottom: 24 }}>
+        <StatCard icon="📚" value={progress.stats.lessons} label="已完成课时" color="#4f46e5" />
+        <StatCard icon="📦" value={progress.stats.words} label="已学单词" color="#06b6d4" />
+        <StatCard icon="🧩" value={progress.stats.grammar} label="语法练习" color="#7c3aed" />
+        <StatCard icon="🎧" value={progress.stats.listening + progress.stats.speaking} label="听口训练" color="#ec4899" />
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 22, alignItems: 'start' }}>
+        <div>
+          <SectionHead title="继续学习" sub="从上次中断的地方接着来" />
+          {continueLesson ? (
+            <div className="card card-hover" style={{ padding: 22, marginBottom: 26, border: '1.5px solid var(--brand)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+                <div>
+                  <span className="pill pill-brand">{getLang(continueLesson.course.languageId).flag} {getLevel(continueLesson.course.levelId).name}</span>
+                  <h3 style={{ marginTop: 10 }}>{continueLesson.lesson.title}</h3>
+                  <p className="muted" style={{ fontSize: 13 }}>{continueLesson.lesson.subtitle}</p>
+                </div>
+                <Link to={'/lesson/' + continueLesson.lesson.id} className="btn btn-primary btn-lg">▶ 立即学习</Link>
+              </div>
+              <div style={{ marginTop: 14 }}>
+                <ProgressBar pct={pathProgress.find(function (p) { return p.course.id === continueLesson.course.id; }).pct} />
+                <span className="muted" style={{ fontSize: 12 }}>课程总进度 {pathProgress.find(function (p) { return p.course.id === continueLesson.course.id; }).pct}%</span>
+              </div>
+            </div>
+          ) : (
+            <div className="card" style={{ marginBottom: 26 }}>
+              <EmptyState icon="🎉" title="太棒了，所有推荐课程都已完成！" sub="去课程体系探索更多内容，或看看其他语言" />
+            </div>
+          )}
+
+          <SectionHead title="我的个性化路径" sub={'依据「' + (persona ? persona.name : '兴趣') + '」画像与「' + level.name + '」能力定制'} />
+          <div className="card" style={{ padding: 8 }}>
+            {path.map(function (c, i) {
+              const pct = pathProgress[i].pct;
+              const l = getLang(c.languageId);
+              return (
+                <Link key={c.id} to={'/courses/' + c.id} className="lesson-row" style={{ borderTop: i > 0 ? '1px solid var(--line)' : 'none' }}>
+                  <div className="li-icon" style={{ background: pct === 100 ? 'var(--ok-soft)' : 'var(--brand-soft)' }}>{pct === 100 ? '✅' : l.flag}</div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div className="li-title">{c.title}</div>
+                    <div className="li-sub">{pct === 0 ? '尚未开始 · 建议按序学习' : '已完成 ' + pct + '%'}</div>
+                    <div style={{ maxWidth: 260, marginTop: 6 }}><ProgressBar pct={pct} color={l.color} /></div>
+                  </div>
+                  <span className="muted" style={{ fontSize: 13 }}>{i === 0 ? '当前起点' : '第 ' + (i + 1) + ' 阶'} →</span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+
+        <div>
+          <SectionHead title="本周活动" sub={'本周已学习 ' + Object.keys(progress.week).reduce(function (a, k) { return a + (progress.week[k] || 0); }, 0) + ' 次'} />
+          <div className="card" style={{ padding: 20, marginBottom: 26 }}>
+            <div className="week-bars">
+              {WEEK_ORDER.map(function (d) {
+                const v = progress.week[d] || 0;
+                return (
+                  <div key={d} className="wb" title={v + ' 次学习'}>
+                    <i style={{ height: Math.max(6, (v / weekMax) * 100) + '%' }} />
+                    <span>周{WEEK_LABELS[d]}</span>
+                  </div>
+                );
+              })}
+            </div>
+            <p className="muted center" style={{ fontSize: 12, marginTop: 12 }}>
+              {progress.lastStudyDate === new Date().toDateString() ? '今天已打卡 ✓ 保持住！' : '今天还没学习，花 5 分钟打卡吧 🌱'}
+            </p>
+          </div>
+
+          <SectionHead title="快捷训练" sub="碎片时间也能提升" />
+          <div className="card" style={{ padding: 14, marginBottom: 26 }}>
+            {path[0] && (
+              <div style={{ display: 'grid', gap: 8 }}>
+                {['vocab', 'grammar', 'listening', 'speaking'].map(function (t, i) {
+                  const lesson = getLessonsOfCourse(path[0].id)[i];
+                  if (!lesson) return null;
+                  const icons = { vocab: '🃏', grammar: '✍️', listening: '🎧', speaking: '🎙️' };
+                  const names = { vocab: '背单词', grammar: '刷语法', listening: '练听力', speaking: '说口语' };
+                  return (
+                    <Link key={t} to={'/lesson/' + lesson.id} className="lesson-row" style={{ borderRadius: 12 }}>
+                      <span style={{ fontSize: 22 }}>{icons[t]}</span>
+                      <span style={{ fontWeight: 700, fontSize: 14.5 }}>{names[t]}</span>
+                      <span className="muted" style={{ marginLeft: 'auto', fontSize: 12.5 }}>5-8 分钟 →</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          <SectionHead title="成就徽章" extra={<Link to="/profile" className="muted" style={{ fontSize: 13 }}>查看全部 →</Link>} />
+          <div className="grid badge" style={{ gap: 10 }}>
+            {ownedBadges.slice(0, 6).map(function (b) {
+              return (
+                <div key={b.id} className="badge-item" title={b.desc}>
+                  <div className="b-icon">{b.icon}</div><b>{b.name}</b><span>{b.desc}</span>
+                </div>
+              );
+            })}
+            {lockedBadges.slice(0, 2).map(function (b) {
+              return (
+                <div key={b.id} className="badge-item locked" title={b.desc}>
+                  <div className="b-icon">{b.icon}</div><b>{b.name}</b><span>未解锁</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ===== 社区交流 ===== */
+const Community = function () {
+  const app = useApp();
+  const db = app.db;
+  const currentUser = app.currentUser;
+  const toggleLike = app.toggleLike;
+  const addPost = app.addPost;
+  const addComment = app.addComment;
+  const showToast = app.showToast;
+  const [text, setText] = useState('');
+  const [openComments, setOpenComments] = useState({});
+  const [commentText, setCommentText] = useState({});
+  const [activeFilter, setActiveFilter] = useState('hot');
+
+  const posts = [].concat(db.posts).sort(function (a, b) {
+    if (activeFilter === 'hot') return (b.baseLikes + b.likedBy.length) - (a.baseLikes + a.likedBy.length);
+    return ((b.time === '刚刚' ? 1 : 0) - (a.time === '刚刚' ? 1 : 0));
+  });
+
+  const submitPost = function () {
+    if (!text.trim()) return;
+    const newBadges = addPost(text.trim());
+    setText('');
+    showToast('发布成功，你的分享会帮助更多人！', 'success');
+    if (newBadges) newBadges.forEach(function () { showToast('🏅 解锁成就「社群之星」', 'success'); });
+  };
+
+  const submitComment = function (postId) {
+    const t = (commentText[postId] || '').trim();
+    if (!t) return;
+    addComment(postId, t);
+    setCommentText({ ...commentText, [postId]: '' });
+    showToast('评论成功', 'info');
+  };
+
+  return (
+    <div className="container page" style={{ padding: '40px 24px 60px', maxWidth: 820 }}>
+      <h1 style={{ fontSize: 30 }}>社区交流</h1>
+      <p className="muted" style={{ margin: '8px 0 24px' }}>分享经验、组队打卡、互相鼓励 —— 学习路上不孤单</p>
+
+      {currentUser ? (
+        <div className="card" style={{ padding: 18, marginBottom: 22 }}>
+          <textarea className="textarea" placeholder={currentUser.name + '，分享你的学习心得、打卡进度或提问吧…'} value={text} onChange={function (e) { setText(e.target.value); }} />
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 12 }}>
+            <span className="muted" style={{ fontSize: 12.5 }}>💡 真诚分享更容易获得同伴的回应</span>
+            <button className="btn btn-primary" disabled={!text.trim()} onClick={submitPost}>发布动态</button>
+          </div>
+        </div>
+      ) : (
+        <div className="card" style={{ padding: '18px 22px', marginBottom: 22, display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+          <span style={{ fontSize: 24 }}>💬</span>
+          <div style={{ flex: 1 }}><b>登录后即可参与社区交流</b><p className="muted" style={{ fontSize: 13 }}>发布动态可获得「社群之星」成就</p></div>
+          <Link to="/login" className="btn btn-primary">登录</Link>
+        </div>
+      )}
+
+      <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
+        <button className={'pill' + (activeFilter === 'hot' ? ' pill-brand' : '')} style={{ cursor: 'pointer' }} onClick={function () { setActiveFilter('hot'); }}>🔥 热门</button>
+        <button className={'pill' + (activeFilter === 'new' ? ' pill-brand' : '')} style={{ cursor: 'pointer' }} onClick={function () { setActiveFilter('new'); }}>🕐 最新</button>
+      </div>
+
+      {posts.length === 0 ? (
+        <EmptyState icon="🍃" title="还没有动态，来发第一条吧" sub="你的经验，是别人的灯塔" />
+      ) : (
+        posts.map(function (p) {
+          const likes = p.baseLikes + p.likedBy.length;
+          const liked = currentUser && p.likedBy.indexOf(currentUser.id) >= 0;
+          const showCmts = openComments[p.id];
+          return (
+            <div key={p.id} className="post-card">
+              <div className="post-head">
+                <span className="avatar">{p.avatar}</span>
+                <div><div className="ph-name">{p.authorName}</div><div className="ph-time">{p.time}</div></div>
+              </div>
+              <div className="post-body">{p.text}</div>
+              <div className="post-actions">
+                <button className="btn btn-ghost btn-sm" style={liked ? { background: 'var(--err-soft)', color: 'var(--err)', border: '1px solid #fecdca' } : {}}
+                  onClick={function () { if (currentUser) toggleLike(p.id); else showToast('请先登录再点赞', 'info'); }}>
+                  {liked ? '❤️ 已赞' : '🤍 点赞'} {likes > 0 && likes}
+                </button>
+                <button className="btn btn-ghost btn-sm" onClick={function () { setOpenComments({ ...openComments, [p.id]: !showCmts }); }}>💬 评论 {p.comments.length}</button>
+              </div>
+              {showCmts && (
+                <div style={{ marginTop: 10 }}>
+                  {p.comments.map(function (c) {
+                    return (
+                      <div key={c.id} className="comment">
+                        <span className="avatar sm">{c.avatar}</span>
+                        <div><b style={{ fontSize: 13 }}>{c.authorName}</b> <span className="muted" style={{ fontSize: 12 }}>{c.time}</span><div style={{ fontSize: 13.5 }}>{c.text}</div></div>
+                      </div>
+                    );
+                  })}
+                  {currentUser ? (
+                    <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
+                      <input className="input" style={{ flex: 1, padding: '9px 12px', fontSize: 13.5 }} placeholder="友善评论，共同进步…" value={commentText[p.id] || ''} onChange={function (e) { setCommentText({ ...commentText, [p.id]: e.target.value }); }} />
+                      <button className="btn btn-soft btn-sm" onClick={function () { submitComment(p.id); }}>发送</button>
+                    </div>
+                  ) : (
+                    <p className="muted" style={{ fontSize: 12.5, marginTop: 10 }}><Link to="/login" style={{ color: 'var(--brand)', fontWeight: 700 }}>登录</Link> 后可参与评论</p>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })
+      )}
+    </div>
+  );
+};
+
+/* ===== 个人中心 ===== */
+const Profile = function () {
+  const app = useApp();
+  const currentUser = app.currentUser;
+  const updateProfile = app.updateProfile;
+  const showToast = app.showToast;
+  const logout = app.logout;
+  const navigate = useNavigate();
+  const [editing, setEditing] = useState(false);
+  const [form, setForm] = useState(currentUser ? { langId: currentUser.langId, levelId: currentUser.levelId, personaId: currentUser.personaId } : null);
+
+  if (!currentUser || !form) return null;
+  const progress = currentUser.progress;
+  const level = getLevelNameByXp(progress.xp);
+  const persona = getPersona(currentUser.personaId);
+  const lang = getLang(currentUser.langId);
+
+  const save = function () {
+    updateProfile(form);
+    setEditing(false);
+    const lv = LEVELS.find(function (l) { return l.id === form.levelId; });
+    showToast('画像已更新！学习起点：' + (lv ? lv.icon + ' ' + lv.name : '') + ' ✨', 'success');
+  };
+
+  const resetDemo = function () {
+    localStorage.removeItem('linguaflow_db_v4');
+    localStorage.removeItem('linguaflow_session');
+    logout();
+    window.location.href = '#/';
+    window.location.reload();
+  };
+
+  const owned = BADGES.filter(function (b) { return progress.badges.indexOf(b.id) >= 0; });
+  const locked = BADGES.filter(function (b) { return progress.badges.indexOf(b.id) < 0; });
+
+  return (
+    <div className="container page" style={{ padding: '36px 24px 60px', maxWidth: 980 }}>
+      <div className="card" style={{ padding: '28px 30px', marginBottom: 24, display: 'flex', gap: 22, alignItems: 'center', flexWrap: 'wrap' }}>
+        <div className="avatar" style={{ width: 72, height: 72, fontSize: 30 }}>{currentUser.avatar}</div>
+        <div style={{ flex: 1, minWidth: 220 }}>
+          <h1 style={{ fontSize: 24 }}>{currentUser.name}</h1>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 8 }}>
+            <span className="pill pill-brand">{lang.flag} {lang.name}</span>
+            <span className="pill pill-brand">{level.icon} {level.name}</span>
+            <span className="pill">{persona.icon} {persona.name}画像</span>
+            <span className="pill">🔥 {progress.streak} 天</span>
+          </div>
+          <p className="muted" style={{ fontSize: 12.5, marginTop: 8 }}>加入于 {new Date(currentUser.joinedAt).toLocaleDateString('zh-CN')} · 共学习 {progress.studyMins} 分钟</p>
+        </div>
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <button className="btn btn-ghost" onClick={function () { setEditing(!editing); }}>{editing ? '取消' : '调整画像'}</button>
+          <button className="btn btn-ghost" style={{ color: 'var(--err)' }} onClick={resetDemo}>重置演示数据</button>
+        </div>
+      </div>
+
+      {editing && (
+        <div className="card bounce-in" style={{ padding: 24, marginBottom: 24 }}>
+          <h3 style={{ marginBottom: 6 }}>调整学习画像（学习路径将随之更新）</h3>
+          <p className="muted" style={{ fontSize: 12.5, marginBottom: 16 }}>
+            说明：这里调整的是「能力起点」，用于生成个性化推荐路径；页面顶部的「当前等级」由累计 XP 自动决定，无需手动修改。
+          </p>
+          <div className="field">
+            <label>目标语言</label>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {LANGUAGES.filter(function (l) { return !l.comingSoon; }).map(function (l) {
+                return <button key={l.id} type="button" className={'pill' + (form.langId === l.id ? ' pill-brand' : '')} style={{ cursor: 'pointer', fontSize: 13.5 }} onClick={function () { setForm({ ...form, langId: l.id }); }}>{l.flag} {l.name}</button>;
+              })}
+            </div>
+          </div>
+          <div className="field">
+            <label>能力起点</label>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {LEVELS.map(function (lv) {
+                return <button key={lv.id} type="button" className={'pill' + (form.levelId === lv.id ? ' pill-brand' : '')} style={{ cursor: 'pointer' }} onClick={function () { setForm({ ...form, levelId: lv.id }); }}>{lv.icon} {lv.name}</button>;
+              })}
+            </div>
+          </div>
+          <div className="field">
+            <label>精准画像</label>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {PERSONAS.map(function (p) {
+                return <button key={p.id} type="button" className={'pill' + (form.personaId === p.id ? ' pill-brand' : '')} style={{ cursor: 'pointer' }} onClick={function () { setForm({ ...form, personaId: p.id }); }}>{p.icon} {p.name}</button>;
+              })}
+            </div>
+          </div>
+          <button className="btn btn-primary" onClick={save}>保存并重新匹配路径</button>
+        </div>
+      )}
+
+      <div className="grid stat" style={{ marginBottom: 28 }}>
+        <StatCard icon="⚡" value={progress.xp} label="累计 XP" color="#f59e0b" />
+        <StatCard icon="📚" value={progress.stats.lessons} label="完成课时" color="#4f46e5" />
+        <StatCard icon="📦" value={progress.stats.words} label="单词" color="#06b6d4" />
+        <StatCard icon="🏅" value={owned.length} label={'成就 ' + owned.length + '/' + BADGES.length} color="#7c3aed" />
+      </div>
+
+      <SectionHead title="成就墙" sub={'已点亮 ' + owned.length + ' / ' + BADGES.length + ' 枚徽章'} />
+      <div className="grid badge" style={{ gap: 12, marginBottom: 28 }}>
+        {BADGES.map(function (b) {
+          const got = progress.badges.indexOf(b.id) >= 0;
+          return (
+            <div key={b.id} className={'badge-item' + (got ? '' : ' locked')} title={b.desc}>
+              <div className="b-icon">{b.icon}</div><b>{b.name}</b><span>{got ? b.desc : '未解锁'}</span>
+            </div>
+          );
+        })}
+      </div>
+
+      {locked.length > 0 && (
+        <div className="card" style={{ padding: '18px 22px', display: 'flex', alignItems: 'center', gap: 12 }}>
+          <span style={{ fontSize: 24 }}>🎯</span>
+          <p className="ink2" style={{ fontSize: 13.5 }}>下一枚可解锁徽章：<b>{locked[0].name}</b>（{locked[0].desc}）。去学习中心继续努力吧！</p>
+          <button className="btn btn-primary btn-sm" style={{ marginLeft: 'auto' }} onClick={function () { navigate('/dashboard'); }}>去学习 →</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+/* ===== 路由与应用 ===== */
+const ScrollToTop = function () {
+  const location = useLocation();
+  useEffect(function () { window.scrollTo(0, 0); }, [location.pathname]);
+  return null;
+};
+
+const ToastHost = function () {
+  const app = useApp();
+  const toasts = app.toasts;
+  return (
+    <div className="toast-wrap">
+      {toasts.map(function (t) {
+        return <div key={t.id} className={'toast ' + t.type}><span>{t.type === 'success' ? '🎉' : t.type === 'info' ? '💡' : '✅'}</span>{t.msg}</div>;
+      })}
+    </div>
+  );
+};
+
+const RequireAuth = function ({ children }) {
+  const app = useApp();
+  const currentUser = app.currentUser;
+  if (!currentUser) return <Navigate to="/login" replace />;
+  return children;
+};
+
+const App = function () {
+  return (
+    <div>
+      <ScrollToTop />
+      <ToastHost />
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/onboarding" element={<RequireAuth><Onboarding /></RequireAuth>} />
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/courses/:courseId" element={<CourseDetail />} />
+          <Route path="/lesson/:lessonId" element={<RequireAuth><LessonPage /></RequireAuth>} />
+          <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
+      </Routes>
+    </div>
+  );
+};
+
+/* ===== 渲染入口（HashRouter 支持本地双击打开）===== */
+(function () {
+  try {
+    ReactDOM.createRoot(document.getElementById('root')).render(
+      <React.StrictMode>
+        <HashRouter>
+          <AppProvider>
+            <App />
+          </AppProvider>
+        </HashRouter>
+      </React.StrictMode>
+    );
+  } catch (err) {
+    var d = document.getElementById('root');
+    if (d) d.innerHTML = '<div style="padding:36px 28px;font-family:sans-serif;max-width:860px;margin:0 auto"><h3 style="color:#ef4444">⚠ 启动失败</h3><b>' + LF_esc(err && err.message) + '</b><pre>' + LF_esc(err && err.stack) + '</pre></div>';
+  }
+})();
+</script>
+<!--APP_CHUNKS-->
+</body>
+</html>
