@@ -2,8 +2,8 @@
 
 面向不同语言基础与学习目标的学习者，提供英语、日语、韩语等主流语言的**分级课程**、**四维互动训练**、**学习进度追踪**、**个性化路径推荐**与**社区成就体系**，陪学习者从零基础走向专业深耕。
 
-- **在线体验：** https://mildseven148.github.io/-/
-- **仓库地址：** https://github.com/MildSeven148/-
+- **在线体验：** https://mildseven148.github.io/linguaflow/
+- **仓库地址：** https://github.com/MildSeven148/linguaflow
 
 ---
 
@@ -82,7 +82,7 @@
 
 ### 方式一：在线访问（最省事）
 
-直接打开：https://mildseven148.github.io/-/
+直接打开：https://mildseven148.github.io/linguaflow/
 
 ### 方式二：免安装单文件版（无需 Node 环境）
 
@@ -207,7 +207,7 @@ npm run preview    # 预览构建产物
 
 ## 运行截图
 
-- 在线体验：https://mildseven148.github.io/-/
+- 在线体验：https://mildseven148.github.io/linguaflow/
 - 本地运行：双击根目录 `语流学习平台-免安装版.html`，或执行 `npm run dev` 后访问 http://localhost:5173
 
 > 截图存放位置：`docs/screenshots/`。按下表文件名保存后，图片会自动显示在本节。
@@ -263,7 +263,7 @@ XP 与等级、连续打卡、本周活动、个性化路径推荐与成就徽�
 
 ## Git 协作记录
 
-- 仓库地址：https://github.com/MildSeven148/-
+- 仓库地址：https://github.com/MildSeven148/linguaflow
 - 访问权限：公开（Public）
 
 **一、分支规划**
