@@ -1,4 +1,7 @@
-import { useMemo, useState } from 'react';
+/* ============================================================
+   课时学习页 · 模块 Tab 切换与学习流程串联
+   职责：四模块切换、完成状态标记、XP 与成就上报
+   ============================================================ */import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { MODULES, getLesson, getLang, getLevel, getModule, BADGES } from '../mock/data';
