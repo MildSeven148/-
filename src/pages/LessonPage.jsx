@@ -1,3 +1,7 @@
+/* ============================================================
+   课时学习页 · 四维互动模块容器
+   模块：单词记忆 / 语法练习 / 听力训练 / 口语跟读
+   ============================================================ */
 import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
