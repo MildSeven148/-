@@ -5,6 +5,19 @@
 - **在线体验：** https://mildseven148.github.io/linguaflow/
 - **仓库地址：** https://github.com/MildSeven148/linguaflow
 
+## 课程提交材料
+
+| 材料 | 文件 |
+| --- | --- |
+| 需求、设计及选题完善说明 | [Project_Requirements_and_Design.md](Project_Requirements_and_Design.md) |
+| AI 结对编程与 Vibe Coding 过程 | [AI_Prompts_Log.md](AI_Prompts_Log.md) |
+| 仓库链接 | [Repository_Link.txt](Repository_Link.txt) |
+| 提交、分支和 PR 历史快照 | [Git_Workflow_Records.md](Git_Workflow_Records.md) |
+| 界面、业务逻辑及数据源码 | src/；桌面启动器与构建源码见 tools/ |
+
+本 README 下文包含图文运行指南、六张实际页面截图及团队分工。
+
+
 ---
 
 ## 项目简介
@@ -86,9 +99,15 @@
 
 ### 方式二：免安装单文件版（无需 Node 环境）
 
-双击打开根目录的 `语流学习平台-免安装版.html` 即可，依赖全部走 CDN，适合离线分享与快速体验。
+双击打开根目录的 `语流学习平台-免安装版.html` 即可。页面、React 和路由依赖、样式均已打包进同一文件，可断网打开，无需安装 Node.js。
 
-### 方式三：本地开发（完整工程）
+### 方式三：Windows 桌面启动器（无需 Node 环境）
+
+双击根目录 `语流学习平台.exe`，程序会启动本地 HTTP 服务并自动打开默认浏览器，不显示命令行窗口。系统托盘图标可双击重新打开页面，右键选择「退出」可关闭服务。
+
+完整页面与运行依赖均已内嵌到 exe，可断网打开。口语录音需允许浏览器访问麦克风；语音示范的可用音色取决于浏览器和系统。启动器源码和编译说明见 [`tools/README.md`](tools/README.md)。
+
+### 方式四：本地开发（完整工程）
 
 需要 Node.js 18+。
 
@@ -106,6 +125,7 @@ Windows 用户也可直接双击 `start.bat` 一键启动（脚本会自动安�
 ```bash
 npm run build      # 生产构建
 npm run preview    # 预览构建产物
+npm run build:single # 生成免安装 HTML，并同步 docs/index.html
 ```
 
 ---
@@ -114,7 +134,8 @@ npm run preview    # 预览构建产物
 
 ```
 ├── docs/
-│   └── index.html                  # GitHub Pages 站点入口（免安装版的部署副本）
+│   ├── index.html                  # GitHub Pages 站点入口（免安装版的部署副本）
+│   └── screenshots/                # 六个实际页面的运行截图
 ├── src/
 │   ├── api/
 │   │   └── mock.js                 # 本地持久化层（localStorage 模拟后端接口）
@@ -150,7 +171,9 @@ npm run preview    # 预览构建产物
 │   ├── App.jsx                     # 路由配置
 │   └── main.jsx                    # 应用入口
 ├── index.html                      # Vite 开发入口
-├── 语流学习平台-免安装版.html        # 免安装单文件版（CDN + Babel standalone）
+├── 语流学习平台-免安装版.html        # 免安装单文件版（已内嵌全部运行依赖）
+├── 语流学习平台.exe                # Windows 托盘启动器（内嵌单文件页面）
+├── tools/                          # 启动器 C# 源码及编译说明
 ├── start.bat                       # Windows 一键启动脚本
 ├── package.json
 ├── vite.config.js
@@ -201,7 +224,9 @@ npm run preview    # 预览构建产物
 
 站点通过 GitHub Pages 发布：仓库 `Settings → Pages` 中，Source 选择 `Deploy from a branch`，分支 `main`，目录 `/docs`。
 
-注意：`docs/index.html` 是根目录 `语流学习平台-免安装版.html` 的副本，修改任一版本后需同步另一份。
+运行 `npm run build:single` 会从 `src/` 生成根目录 `语流学习平台-免安装版.html` 和内容相同的 `docs/index.html`；单文件版使用 HashRouter，支持 GitHub Pages 子目录和刷新。脚本将运行依赖和样式内嵌，不需要 CDN。源码变更后重新运行此命令，并按 `tools/README.md` 重新编译 exe，保持三种发布产物一致。
+
+第三方依赖的许可证随单文件 HTML 一并内嵌，同时保存在 `THIRD_PARTY_LICENSES.txt`。
 
 ---
 
@@ -210,7 +235,7 @@ npm run preview    # 预览构建产物
 - 在线体验：https://mildseven148.github.io/linguaflow/
 - 本地运行：双击根目录 `语流学习平台-免安装版.html`，或执行 `npm run dev` 后访问 http://localhost:5173
 
-> 截图存放位置：`docs/screenshots/`。按下表文件名保存后，图片会自动显示在本节。
+> 截图存放位置：`docs/screenshots/`。以下六张图于 2026-10-15 从本地 React 工程的生产构建中实际截取，分别对应首页、课程体系、课时学习、学习中心、社区交流和个人中心；登录页面使用临时演示账号。
 
 ### 1. 首页
 
@@ -285,7 +310,7 @@ XP 与等级、连续打卡、本周活动、个性化路径推荐与成就徽�
 | [#2](https://github.com/MildSeven148/linguaflow/pull/2) | `feature/recommend-progress` | 补充本地持久化层接口说明 | `93ba5cd` | 2026-10-15 |
 | [#3](https://github.com/MildSeven148/linguaflow/pull/3) | `feature/learn-modules` | 补充四模块容器说明注释（**含冲突解决**） | `92ddfd4` | 2026-10-15 |
 
-三个分支均从 `main` 拉出，经 Pull Request 合入后按规范删除；当前仓库仅保留 `main` 分支。
+三个分支均从 `main` 拉出，经 Pull Request 合入后删除；当前仓库仅保留 `main` 分支。上述三个 PR 的具体改动是模块职责注释，功能代码提交请参阅完整历史，不能将这些注释 PR 单独当作多人功能开发证明。
 
 **三、冲突处理记录**
 
@@ -308,7 +333,7 @@ PR #3 与已合并的 PR #1 修改了同一文件（`src/pages/LessonPage.jsx`�
 
 4. **冲突处理约定**：合并前先将 `main` 最新代码合并进自己的分支，就近解决冲突；冲突解决后**必须重新通读改动文件**，确认标记已清除、代码可正常运行，再提交 Pull Request。
 
-> 说明：上述分支工作流由项目组在单一账号下实践完成（组内其他成员暂无 GitHub 账号），评审环节以 Pull Request 说明中的自测记录替代他人 Approve。
+> 说明：上述分支工作流在单一 GitHub 账号下实践完成；记录包含 PR 描述和自测说明，没有其他账号的 Approve 记录。自测与多人评审分别记录。
 
 ---
 
